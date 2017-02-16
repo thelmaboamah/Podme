@@ -1,0 +1,23 @@
+{
+  "name": "podme",
+  "version": "1.0.0",
+  "description": "podcast playlists",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klawton1/Podme.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klawton1/Podme/issues"
+  },
+  "homepage": "https://github.com/klawton1/Podme#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "mongoose": "^4.8.3"
+  }
+}
