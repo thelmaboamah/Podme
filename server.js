@@ -25,6 +25,7 @@ app.get('/api', function(req, res){
     homepage: "--- REPLACE WITH URL----",
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
+      {method: "GET", path: "/api/podlist", description: "find all podlists"}
     ]
   })
 });
