@@ -1,12 +1,12 @@
 var mongoose = require("mongoose");
 
-var Playlist = require("./playlist")
+var Podlist = require("./podlist")
 
 var userSchema = new mongoose.Schema({
   name: String,
   picture: String,
   aboutMe: String,
-  playlists: [Playlist.schema]
+  podlist: [Podlist.schema]
 });
 
 var User = mongoose.model("User", userSchema);
