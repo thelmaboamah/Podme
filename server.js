@@ -16,6 +16,16 @@ app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/api', function(req, res){
+  res.json({
+    info: "Welcome to PodMe API. Here you can find some information about the different endpoints and methods that are supported.",
+    gitHub_url: "https://github.com/klawton1/Podme",
+    homepage: "--- REPLACE WITH URL----",
+    endpoints: [
+      {method: "GET", path: "/api", description: "Describes all available endpoints"},
+    ]
+  })
+})
 
 
 
