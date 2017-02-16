@@ -8,6 +8,8 @@ app.use(function(req, res, next) {
   next();
 });
 
+var db = require('./models');
+
 app.use(express.static('public'));
 
 
@@ -25,6 +27,13 @@ app.get('/api', function(req, res){
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
     ]
   })
+});
+
+app.get('/api/podlist', function(req, res){
+  db.Podlist.find({}, function(err, pods){
+    res.json(pods);
+  })
+
 })
 
 
