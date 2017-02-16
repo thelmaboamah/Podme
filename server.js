@@ -12,13 +12,10 @@ app.use(express.static('public'));
 
 
 
-// app.get('/', function homepage(req, res) {
-//   res.sendFile(__dirname + '/views/index.html');
-// });
-
 app.get('/', function homepage(req, res) {
-  res.send("CONNECTED TO LOCALHOST");
+  res.sendFile(__dirname + '/views/index.html');
 });
+
 
 
 
