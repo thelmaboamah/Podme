@@ -4,4 +4,4 @@ var User = require("./user");
 var Playlist = require("./playlist");
 
 module.exports.User = User;
-module.exports.Playlist = Playlist;
+module.exports.Playlist = Playlist

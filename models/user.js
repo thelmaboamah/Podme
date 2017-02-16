@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
   name: String,
   picture: String,
   aboutMe: String,
-  playlists: [playlist.schema]
+  playlists: [Playlist.schema]
 });
 
 var User = mongoose.model("User", userSchema);
