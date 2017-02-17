@@ -46,15 +46,19 @@ $(document).ready(function(){
 	]
 	}];
 
-	var podcastHtml = `<div class="podcast">
-				<img class="img-responsive" src="${result[0].artworkUrl600}" alt="">
-				<h4>${result[0].collectionName}</h4>
+	var podcastHtml = `<div class="podcast col-xs-6 col-sm-4 col-md-3">
+				<img role="button" class="img-responsive" src="${result[0].artworkUrl600}" alt="">
+				<div class="sub-heading">
+					<h4>${result[0].collectionName}</h4>
+					<i class="fa fa-plus" role="button" aria-hidden="true"></i>
+				</div>
 			</div>`;
 
-	for (var i = 1; i < 4; i++ ) {
+	for (var i = 1; i < 7; i++ ) {
 		$("#podcast-list").prepend(podcastHtml);
 	}
 	
+	var morePodcastInfoHtml = `<div class="podcastIfo"></div>`
 
 	
 
