@@ -12,7 +12,7 @@ var db = require('./models');
 
 app.use(express.static('public'));
 
-
+var controllers = require('./controllers');
 
 app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -30,76 +30,22 @@ app.get('/api', function(req, res){
   })
 });
 
-app.get('/api/podlists', function(req, res){
-  db.Podlist.find({}, function(err, pods){
-    if(err){console.log(err);}
-    res.json(pods);
-  })
-})
+app.get('/api/podlists', controllers.podlist.index)
 
-app.get('/api/podcasts', function(req, res){
-  db.Podcast.find({}, function(err, podcasts){
-    if(err){console.log(err);}
-    res.json(podcasts);
-  })
-})
+app.get('/api/podcasts', controllers.podcast.index)
 
-app.get('/api/podlists/:id', function(req, res){
-  var id = req.params.id
-  db.Podlist.findOne({_id: id}, function(err, pod){
-    if(err){console.log(err);}
-    console.log("FOUND PODLIST", pod)
-    res.json(pod);
-  })
-})
+app.get('/api/podlists/:id', controllers.podlist.find)
 
 
-app.post('/api/podlists', function(req, res){
-  var info = req.body;
-  db.Podlist.create(info, function(err, pod){
-    if(err){console.log(err);}
-    console.log(pod);
-    res.json(pod);
-  })
-})
+app.post('/api/podlists', controllers.podlist.create)
 
 
 // NEED TO ADD CREATE IF PODCAST HAS NOT BEEN ADDED TO DB YET
-app.post('/api/podlists/:id/podcasts', function(req, res){
-  var id = req.params.id;
-  var info = req.body;
-  db.Podcast.findOne(info, function(err, podcast){
-    if(err){console.log(err);}
-    console.log("FOUND PODCAST TO ADD TO PODLIST",podcast);
-    db.Podlist.findOne({_id: id}, function(err, podlist){
-      if(err){console.log(err);}
-      podlist.podcasts.push(podcast);
-      podlist.save(function(err, podlist){
-        console.log("SAVED PODLIST",podlist);
-        res.json(podlist);
-      });
-    })
-  })
-})
+app.post('/api/podlists/:id/podcasts', controllers.podcast.add)
 
-app.put('/api/podlists/:id', function(req, res){
-  var id = req.params.id;
-  var edits = {};
-  if(req.body.name){
-    edits.name = req.body.name
-  }
-  if(req.body.description){
-    edits.description = req.body.description;
-  }
-  console.log("EDITS",edits);
-  db.Podlist.findOneAndUpdate({_id: id}, edits, function(err, podlist){
-    if(err){console.log(err);}
-    console.log("UPDATED PODLIST", podlist)
-    res.json(podlist);
-  })
-})
+app.put('/api/podlists/:id', controllers.podlist.edit)
 
-app.delete('/api/podlists/:id', function(req, res){})
+app.delete('/api/podlists/:id', controllers.podlist.remove)
 
 
 
