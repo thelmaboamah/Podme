@@ -1,27 +1,37 @@
 var db = require('../models');
 
 function index(req, res){
-  db.Podlist.find({}, function(err, pods){
+  db.Podlist.find({}, function(err, podlists){
     if(err){console.log(err);}
-    res.json(pods);
+    res.json(podlists);
   })
 };
 
 function find(req, res){
   var id = req.params.id
-  db.Podlist.findOne({_id: id}, function(err, pod){
+  db.Podlist.findOne({_id: id}, function(err, podlist){
     if(err){console.log(err);}
-    console.log("FOUND PODLIST", pod)
-    res.json(pod);
+    console.log("FOUND PODLIST", podlist)
+    res.json(podlist);
   })
+}
+
+function findPodcasts(req, res){
+  var id = req.params.id;
+  db.Podlist.findOne({_id: id})
+    .populate('podcasts')
+    .exec(function(err, podlist){
+      console.log(podlist);
+      res.json(podlist.podcasts);
+    })
 }
 
 function create(req, res){
   var info = req.body;
-  db.Podlist.create(info, function(err, pod){
+  db.Podlist.create(info, function(err, podlist){
     if(err){console.log(err);}
-    console.log(pod);
-    res.json(pod);
+    console.log(podlist);
+    res.json(podlist);
   })
 }
 
@@ -53,6 +63,7 @@ function remove(req, res){
 module.exports = {
   index: index,
   find: find,
+  findPodcasts: findPodcasts,
   create: create,
   edit: edit,
   remove: remove
