@@ -1,6 +1,5 @@
 $(document).ready(function(){
-	console.log("jQuery is working.");
-
+	//Search iTunes API and load results on page load
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
@@ -15,8 +14,23 @@ $(document).ready(function(){
 
 	})
 
+	//Let user search iTunes API using a word in the title
+	$("#itunesSearch").submit(function(e) {
+		e.preventDefault();
+		$.ajax({
+			method: "GET",
+			url:"https://itunes.apple.com/search",
+			dataType: "jsonp",
+			data: $(this).serialize(),
+			success: itunesReqSuccess,
+			error: itunesReqErr
+		});
+
+	});
+
 	function itunesReqErr(){
-		$("#podcast-list").html(`<p>Sorry, your search did not return any result.</p>`);
+   	$("#podcast-list").html(`<p>Sorry, your search did not return any result.</p>`);
+
 	}
 
 	function itunesReqSuccess(data){
@@ -30,7 +44,6 @@ $(document).ready(function(){
 				renderPodcast(podcast);
 			})
 		}
-
 	}
 
 	function renderPodcast(podcast){

@@ -33,9 +33,11 @@
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Your PodLists</a></li>
 				</ul>
-				<form role="search" action="">
-					<label for="search">Find a Podcast</label>
-					<input name="term" type="text" id="search">
+				<form role="search" id="itunesSearch" >
+					<label for="searchTerm">Find a Podcast</label>
+					<input name="term" type="text" id="searchTerm">
+					<input type="hidden" name="media" value="podcast">
+					<input type="hidden" name="attribute" value="titleTerm">
 					<input class="btn btn-info" type="submit" value="Search">
 				</form>
 			</nav>
