@@ -7,7 +7,7 @@ $(document).ready(function(){
 		data: {
 			media: "podcast",
 			attribute: "descriptionTerm",
-			term: "politics"
+			term: randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"])
 		},
 		success: itunesReqSuccess,
 		error: itunesReqErr
@@ -62,6 +62,11 @@ $(document).ready(function(){
 		//How would I do this responsively?
 		var shortenedTitle = str.length > 10 ? str.slice(0,11) + "..." : str;
 		return shortenedTitle;
+	}
+
+	function randomize(arr){
+			var randIndex = Math.floor((Math.random() * arr.length));
+			return arr[randIndex];		
 	}
 	
 	// var morePodcastInfoHtml = `<div class="podcastIfo"></div>`
