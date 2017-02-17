@@ -46,12 +46,26 @@ app.get('/api/podlist/:id', function(req, res){
   })
 })
 
+
 app.post('/api/podlist', function(req, res){
   var info = req.body;
   db.Podlist.create(info, function(err, pod){
     if(err){console.log(err);}
     console.log(pod);
     res.json(pod);
+  })
+})
+
+app.post('/api/podlist/:id/', function(req, res){
+  var id = req.params.id;
+  var info = req.body;
+  db.Podcast.create(info, function(err, podcast){
+    console.log("NEW PODCAST",podcast);
+    db.Podlist.findOne({_id: id}, function(err, podlist){
+      podlist.podcasts.push(podcast);
+      console.log(podlist);
+      res.json(podlist);
+    })
   })
 })
 
