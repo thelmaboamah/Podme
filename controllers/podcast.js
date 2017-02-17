@@ -10,16 +10,29 @@ function index(req, res){
 function add(req, res){
   var id = req.params.id;
   var info = req.body;
-  db.Podcast.findOne(info, function(err, podcast){
+  db.Podlist.findOne({_id: id}, function(err, podlist){
     if(err){console.log(err);}
-    console.log("FOUND PODCAST TO ADD TO PODLIST",podcast);
-    db.Podlist.findOne({_id: id}, function(err, podlist){
+    db.Podcast.find(info, function(err, podcast){
       if(err){console.log(err);}
-      podlist.podcasts.push(podcast);
-      podlist.save(function(err, podlist){
-        console.log("SAVED PODLIST",podlist);
-        res.json(podlist);
-      });
+      if(podcast.length){
+        console.log("FOUND PODCAST TO ADD TO PODLIST",podcast);
+        podlist.podcasts.push(podcast);
+        podlist.save(function(err, podlist){
+          console.log("SAVED PODLIST",podlist);
+          res.json(podlist);
+        });
+      }else{
+        var podcast = new db.Podcast(info);
+        console.log("New Podcast Info",info);
+        podcast.save(function(err, podcast){
+          if(err){console.log(err);}
+          podlist.podcasts.push(podcast);
+          podlist.save(function(err, podlist){
+          console.log("SAVED PODLIST",podlist);
+          res.json(podlist);
+        });
+        })
+      }
     })
   })
 }
