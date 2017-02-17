@@ -34,7 +34,14 @@ app.get('/api/podlist', function(req, res){
   db.Podlist.find({}, function(err, pods){
     res.json(pods);
   })
+})
 
+app.post('/api/podlist', function(req, res){
+  var info = req.body;
+  db.Podlist.create(info, function(err, pod){
+    console.log(pod);
+    res.json(pod);
+  })
 })
 
 
