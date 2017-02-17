@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var Podlist = require("./podlist")
+var Podlist = require("./podlist");
 
 var userSchema = new mongoose.Schema({
   name: String,
