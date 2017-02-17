@@ -1,5 +1,13 @@
+body {
+  font-family: 'Open Sans Condensed', sans-serif; }
+
 main {
   min-height: 100vh; }
+
+h1 {
+  font-family: 'Bungee Shade', cursive;
+  text-align: center;
+  font-size: 64px; }
 
 h2 {
   text-align: center; }
