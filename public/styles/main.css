@@ -1,11 +1,14 @@
 h4 {
   font-size: 16px; }
 
+.img-responsive {
+  width: 100%; }
+
 .podcast {
-  margin-bottom: 25px; }
+  margin-bottom: 28px; }
   .podcast .sub-heading {
     display: flex;
-    padding-top: 5px;
+    padding-top: 7px;
     align-items: center; }
   .podcast h4 {
     display: inline-block;
