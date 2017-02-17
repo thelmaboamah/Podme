@@ -37,6 +37,13 @@ app.get('/api/podlists', function(req, res){
   })
 })
 
+app.get('/api/podcasts', function(req, res){
+  db.Podcast.find({}, function(err, podcasts){
+    if(err){console.log(err);}
+    res.json(podcasts);
+  })
+})
+
 app.get('/api/podlists/:id', function(req, res){
   var id = req.params.id
   db.Podlist.findOne({_id: id}, function(err, pod){
