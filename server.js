@@ -30,14 +30,21 @@ app.get('/api', function(req, res){
   })
 });
 
-app.get('/api/podlist', function(req, res){
+app.get('/api/podlists', function(req, res){
   db.Podlist.find({}, function(err, pods){
     if(err){console.log(err);}
     res.json(pods);
   })
 })
 
-app.get('/api/podlist/:id', function(req, res){
+app.get('/api/podcasts', function(req, res){
+  db.Podcast.find({}, function(err, podcasts){
+    if(err){console.log(err);}
+    res.json(podcasts);
+  })
+})
+
+app.get('/api/podlists/:id', function(req, res){
   var id = req.params.id
   db.Podlist.findOne({_id: id}, function(err, pod){
     if(err){console.log(err);}
@@ -46,7 +53,8 @@ app.get('/api/podlist/:id', function(req, res){
   })
 })
 
-app.post('/api/podlist', function(req, res){
+
+app.post('/api/podlists', function(req, res){
   var info = req.body;
   db.Podlist.create(info, function(err, pod){
     if(err){console.log(err);}
@@ -55,7 +63,26 @@ app.post('/api/podlist', function(req, res){
   })
 })
 
-app.put('/api/podlist/:id', function(req, res){
+
+// NEED TO ADD CREATE IF PODCAST HAS NOT BEEN ADDED TO DB YET
+app.post('/api/podlists/:id/podcasts', function(req, res){
+  var id = req.params.id;
+  var info = req.body;
+  db.Podcast.findOne(info, function(err, podcast){
+    if(err){console.log(err);}
+    console.log("FOUND PODCAST TO ADD TO PODLIST",podcast);
+    db.Podlist.findOne({_id: id}, function(err, podlist){
+      if(err){console.log(err);}
+      podlist.podcasts.push(podcast);
+      podlist.save(function(err, podlist){
+        console.log("SAVED PODLIST",podlist);
+        res.json(podlist);
+      });
+    })
+  })
+})
+
+app.put('/api/podlists/:id', function(req, res){
   var id = req.params.id;
   var edits = {};
   if(req.body.name){
@@ -72,7 +99,7 @@ app.put('/api/podlist/:id', function(req, res){
   })
 })
 
-app.delete('/api/podlist/:id', function(req, res){})
+app.delete('/api/podlists/:id', function(req, res){})
 
 
 
