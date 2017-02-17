@@ -41,7 +41,7 @@ app.get('/api/podlist/:id', function(req, res){
   var id = req.params.id
   db.Podlist.findOne({_id: id}, function(err, pod){
     if(err){console.log(err);}
-    console.log("FOUND PODLIST")
+    console.log("FOUND PODLIST", pod)
     res.json(pod);
   })
 })
@@ -57,15 +57,18 @@ app.post('/api/podlist', function(req, res){
 
 app.put('/api/podlist/:id', function(req, res){
   var id = req.params.id;
-  var edits = {
-    name: req.name || null,
-    description: req.description || null,
-  };
+  var edits = {};
+  if(req.body.name){
+    edits.name = req.body.name
+  }
+  if(req.body.description){
+    edits.description = req.body.description;
+  }
   console.log("EDITS",edits);
-  db.Podlist.update({_id: id}, edits, function(err, pod){
+  db.Podlist.findOneAndUpdate({_id: id}, edits, function(err, podlist){
     if(err){console.log(err);}
-    console.log("UPDATED PODLIST", pod)
-
+    console.log("UPDATED PODLIST", podlist)
+    res.json(podlist);
   })
 })
 
