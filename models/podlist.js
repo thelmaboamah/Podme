@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 
 var podlistSchema = new mongoose.Schema({
   name: String,
+  description: String,
   podcasts: [{
     image: String,
     topic: [String],
@@ -13,3 +14,4 @@ var podlistSchema = new mongoose.Schema({
 var Podlist = mongoose.model('Podlist', podlistSchema)
 
 module.exports = Podlist;
+
