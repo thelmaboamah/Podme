@@ -12,7 +12,7 @@ var db = require('./models');
 
 app.use(express.static('public'));
 
-
+var controllers = require('./controllers');
 
 app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -30,19 +30,9 @@ app.get('/api', function(req, res){
   })
 });
 
-app.get('/api/podlists', function(req, res){
-  db.Podlist.find({}, function(err, pods){
-    if(err){console.log(err);}
-    res.json(pods);
-  })
-})
+app.get('/api/podlists', controllers.podlist.index)
 
-app.get('/api/podcasts', function(req, res){
-  db.Podcast.find({}, function(err, podcasts){
-    if(err){console.log(err);}
-    res.json(podcasts);
-  })
-})
+app.get('/api/podcasts', controllers.podcast.index)
 
 app.get('/api/podlists/:id', function(req, res){
   var id = req.params.id
