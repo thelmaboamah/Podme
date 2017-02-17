@@ -6,26 +6,38 @@ $(document).ready(function(){
 		url: "https://itunes.apple.com/search",
 		dataType: "jsonp",
 		data: {
-			entity: "podcast",
-			attribute: "titleTerm",
+			media: "podcast",
+			attribute: "descriptionTerm",
 			term: "politics"
 		},
-		success: itunesReqSuccess
+		success: itunesReqSuccess,
+		error: itunesReqErr
 
 	})
 
+	function itunesReqErr(){
+		$("#podcast-list").html(`<p>Sorry, your search did not return any result.</p>`);
+	}
+
 	function itunesReqSuccess(data){
-		var podcastArr = data.results;
-		podcastArr.forEach(function(podcast){
-			renderPodcast(podcast);
-		})
+		//Handle if empty object is returned	
+		if(data.resultCount == 0){
+			itunesReqErr();
+		} else {
+			$("#podcast-list").empty();
+			var podcastArr = data.results;
+			podcastArr.forEach(function(podcast){
+				renderPodcast(podcast);
+			})
+		}
+
 	}
 
 	function renderPodcast(podcast){
 			var podcastHtml = `<div class="podcast col-xs-6 col-sm-4 col-md-3">
 				<img role="button" class="img-responsive" src="${podcast.artworkUrl600}" alt="">
 				<div class="sub-heading">
-					<h4>${elipsify(podcast.collectionName)}</h4>
+					<h4 role="button">${elipsify(podcast.collectionName)}</h4>
 					<i class="fa fa-plus" role="button" aria-hidden="true" title="Add to PodList"></i>
 				</div>
 			</div>`;
@@ -33,7 +45,9 @@ $(document).ready(function(){
 	}
 
 	function elipsify(str){
-		var shortenedTitle = str.length > 17 ? str.slice(0,18) + "..." : str;
+		//Shorten the podcast title so it doesn't break onto a new line and distort content below
+		//How would I do this responsively?
+		var shortenedTitle = str.length > 10 ? str.slice(0,11) + "..." : str;
 		return shortenedTitle;
 	}
 	
