@@ -30,14 +30,14 @@ app.get('/api', function(req, res){
   })
 });
 
-app.get('/api/podlist', function(req, res){
+app.get('/api/podlists', function(req, res){
   db.Podlist.find({}, function(err, pods){
     if(err){console.log(err);}
     res.json(pods);
   })
 })
 
-app.get('/api/podlist/:id', function(req, res){
+app.get('/api/podlists/:id', function(req, res){
   var id = req.params.id
   db.Podlist.findOne({_id: id}, function(err, pod){
     if(err){console.log(err);}
@@ -47,7 +47,7 @@ app.get('/api/podlist/:id', function(req, res){
 })
 
 
-app.post('/api/podlist', function(req, res){
+app.post('/api/podlists', function(req, res){
   var info = req.body;
   db.Podlist.create(info, function(err, pod){
     if(err){console.log(err);}
@@ -56,7 +56,7 @@ app.post('/api/podlist', function(req, res){
   })
 })
 
-app.post('/api/podlist/:id/', function(req, res){
+app.post('/api/podlists/:id/podcasts', function(req, res){
   var id = req.params.id;
   var info = req.body;
   db.Podcast.create(info, function(err, podcast){
@@ -69,7 +69,7 @@ app.post('/api/podlist/:id/', function(req, res){
   })
 })
 
-app.put('/api/podlist/:id', function(req, res){
+app.put('/api/podlists/:id', function(req, res){
   var id = req.params.id;
   var edits = {};
   if(req.body.name){
@@ -86,7 +86,7 @@ app.put('/api/podlist/:id', function(req, res){
   })
 })
 
-app.delete('/api/podlist/:id', function(req, res){})
+app.delete('/api/podlists/:id', function(req, res){})
 
 
 
