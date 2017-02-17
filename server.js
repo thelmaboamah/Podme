@@ -63,15 +63,21 @@ app.post('/api/podlists', function(req, res){
   })
 })
 
+
+// NEED TO ADD CREATE IF PODCAST HAS NOT BEEN ADDED TO DB YET
 app.post('/api/podlists/:id/podcasts', function(req, res){
   var id = req.params.id;
   var info = req.body;
-  db.Podcast.create(info, function(err, podcast){
-    console.log("NEW PODCAST",podcast);
+  db.Podcast.findOne(info, function(err, podcast){
+    if(err){console.log(err);}
+    console.log("FOUND PODCAST TO ADD TO PODLIST",podcast);
     db.Podlist.findOne({_id: id}, function(err, podlist){
+      if(err){console.log(err);}
       podlist.podcasts.push(podcast);
-      console.log(podlist);
-      res.json(podlist);
+      podlist.save(function(err, podlist){
+        console.log("SAVED PODLIST",podlist);
+        res.json(podlist);
+      });
     })
   })
 })
