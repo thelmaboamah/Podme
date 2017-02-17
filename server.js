@@ -36,6 +36,8 @@ app.get('/api/podcasts', controllers.podcast.index)
 
 app.get('/api/podlists/:id', controllers.podlist.find)
 
+app.get('/api/podlists/:id/podcasts', controllers.podlist.findPodcasts)
+
 
 app.post('/api/podlists', controllers.podlist.create)
 
