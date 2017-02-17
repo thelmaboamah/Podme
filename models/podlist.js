@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var playlistSchema = new mongoose.Schema({
+var podlistSchema = new mongoose.Schema({
   name: String,
   podcasts: [{
     image: String,
@@ -10,6 +10,6 @@ var playlistSchema = new mongoose.Schema({
     }]
 })
 
-var Playlist = mongoose.model('Playlist', playlistSchema)
+var Podlist = mongoose.model('Podlist', podlistSchema)
 
-module.exports = Playlist;
+module.exports = Podlist;

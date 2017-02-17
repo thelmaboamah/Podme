@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/podme");
 var User = require("./user");
-var Playlist = require("./playlist");
+var Podlist = require("./podlist");
 
 module.exports.User = User;
-module.exports.Playlist = Playlist
+module.exports.Podlist = Podlist

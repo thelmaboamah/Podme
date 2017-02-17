@@ -8,6 +8,8 @@ app.use(function(req, res, next) {
   next();
 });
 
+var db = require('./models');
+
 app.use(express.static('public'));
 
 
@@ -16,6 +18,24 @@ app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/api', function(req, res){
+  res.json({
+    info: "Welcome to PodMe API. Here you can find some information about the different endpoints and methods that are supported.",
+    gitHub_url: "https://github.com/klawton1/Podme",
+    homepage: "--- REPLACE WITH URL----",
+    endpoints: [
+      {method: "GET", path: "/api", description: "Describes all available endpoints"},
+      {method: "GET", path: "/api/podlist", description: "find all podlists"}
+    ]
+  })
+});
+
+app.get('/api/podlist', function(req, res){
+  db.Podlist.find({}, function(err, pods){
+    res.json(pods);
+  })
+
+})
 
 
 
