@@ -65,22 +65,16 @@ db.Podcast.remove({}, function(err, res){
         podlists[0].podcasts.push(podcasts[0], podcasts[1], podcasts[2]);
         podlists[1].podcasts.push(podcasts[2], podcasts[3]);
         podlists[2].podcasts.push(podcasts[4]);
-        console.log(podlists[0].podcasts)
-        console.log(podlists[1].podcasts)
-        console.log(podlists[2].podcasts)
         podlists[0].save(function(err, podlist){
           podlists[1].save(function(err, podlist){
             podlists[2].save(function(err, podlist){
-              console.log(podlists);
+              console.log("Successful Seed");
               process.exit();
             })
           })
         })
 
       })
-      // console.log(first, second, third);
-      // console.log(podcasts);
-      // console.log("________------------------____________")
     })
   })
 })
