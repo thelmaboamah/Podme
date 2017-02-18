@@ -7,7 +7,8 @@ main {
 h1 {
   font-family: 'Bungee Shade', cursive;
   text-align: center;
-  font-size: 64px; }
+  font-size: 66px;
+  margin-bottom: 13px; }
 
 h2 {
   text-align: center;
@@ -53,6 +54,7 @@ nav {
         margin-left: 80px;
         padding-bottom: 0px; } }
 
+/**** IMAGES *****/
 .img-responsive {
   width: 100%; }
 
@@ -74,6 +76,10 @@ nav {
     line-height: 1.1; }
   .podcast .fa-plus {
     font-size: 24px; }
+  .podcast .pod-img {
+    opacity: .8; }
+    .podcast .pod-img:hover {
+      opacity: 1; }
 
 footer {
   margin-top: 100px;
