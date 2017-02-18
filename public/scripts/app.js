@@ -60,7 +60,7 @@ $(document).ready(function(){
 	function elipsify(str){
 		//Shorten the podcast title so it doesn't break onto a new line and distort content below
 		//How would I do this responsively?
-		var shortenedTitle = str.length > 10 ? str.slice(0,11) + "..." : str;
+		var shortenedTitle = str.length > 15 ? str.slice(0,16) + "..." : str;
 		return shortenedTitle;
 	}
 
