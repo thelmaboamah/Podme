@@ -1,8 +1,9 @@
 var mongoose = require("mongoose");
 
 var podcastSchema = new mongoose.Schema({
+  title: String,
   image: String,
-  topic: [String],
+  genres: [String],
   producer: String,
   episodes: String
 })
