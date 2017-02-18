@@ -32,6 +32,9 @@ nav {
       display: inline;
       margin: 0 10px;
       font-size: 28px; }
+      nav ul li:hover {
+        color: #4cb5f5;
+        font-weight: 700; }
   nav form {
     text-align: center;
     padding-bottom: 10px; }
@@ -79,7 +82,8 @@ nav {
   .podcast .pod-img {
     opacity: .8; }
     .podcast .pod-img:hover {
-      opacity: 1; }
+      opacity: 1;
+      transform: scale(1.1); }
 
 footer {
   margin-top: 100px;
