@@ -48,7 +48,7 @@ $(document).ready(function(){
 
 	function renderPodcast(podcast){
 			var podcastHtml = `<div class="podcast col-xs-6 col-sm-4 col-md-3">
-				<img role="button" class="img-responsive" src="${podcast.artworkUrl600}" alt="">
+				<img role="button" class="img-responsive pod-img" src="${podcast.artworkUrl600}" alt="">
 				<div class="sub-heading">
 					<h4 role="button">${elipsify(podcast.collectionName)}</h4>
 					<i class="fa fa-plus" role="button" aria-hidden="true" title="Add to PodList"></i>
