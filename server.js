@@ -18,6 +18,10 @@ app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/user', function podlistPage(req, res){
+  res.sendFile(__dirname + '/podlist-page/user.html');
+})
+
 app.get('/api', function(req, res){
   res.json({
     info: "Welcome to PodMe API. Here you can find some information about the different endpoints and methods that are supported.",
