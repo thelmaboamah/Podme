@@ -28,8 +28,6 @@ $(document).ready(function(){
 
 	});
 
-
-
 	function itunesReqErr(){
    	//Handle error
    	$("#podcast-list").html(`<p>Sorry, your search did not return any result.</p>`);
@@ -38,26 +36,39 @@ $(document).ready(function(){
 
 	function itunesReqSuccess(data){
 		//Handle if empty object is returned	
+		var podcastArr = data.results;
 		if(data.resultCount == 0){
 			itunesReqErr();
 		} else {
 			$("#podcast-list").empty();
-			var podcastArr = data.results;
 			podcastArr.forEach(function(podcast){
 				renderPodcast(podcast);
 			})
 		}
+	
+		//Dealing with getting data about specific podcasts to show in modal
+	  $("#podcast-list").on("click", ".podcast", function(e){
+	  	var collectionId = $(this).attr("data-id");
+	  	console.log(collectionId);
+	  	var foundPodcast = podcastArr.find(function(podcast){
+	  		return podcast.collectionId == collectionId;
+	  	})
+	  	console.log(foundPodcast);
+
+	  	renderModalData(foundPodcast);
+
+	  });
 	}
 
 	function renderPodcast(podcast){
-			var podcastHtml = `<div data-id="${podcast.collectionId}" class="podcast col-xs-6 col-sm-4 col-md-3">
-				<img role="button" class="img-responsive pod-img" src="${podcast.artworkUrl600}" alt="">
-				<div class="sub-heading">
-					<h4 role="button" title="${podcast.collectionName}">${elipsify(podcast.collectionName)}</h4>
-					<i class="fa fa-plus" role="button" aria-hidden="true" title="Add to PodList"></i>
-				</div>
-			</div>`;
-			$("#podcast-list").append(podcastHtml);
+		var podcastHtml = `<div data-id="${podcast.collectionId}" class="podcast col-xs-6 col-sm-4 col-md-3">
+			<img role="button" class="img-responsive pod-img" src="${podcast.artworkUrl600}" alt="">
+			<div class="sub-heading">
+				<h4 role="button" title="${podcast.collectionName}">${elipsify(podcast.collectionName)}</h4>
+				<i class="fa fa-plus" role="button" aria-hidden="true" title="Add to PodList"></i>
+			</div>
+		</div>`;
+		$("#podcast-list").append(podcastHtml);
 	}
 
 	function elipsify(str){
@@ -72,90 +83,30 @@ $(document).ready(function(){
 			return arr[randIndex];		
 	}
 	
-	// var morePodcastInfoHtml = `<div class="podcastIfo"></div>`
 
-
-
-	var results = 
-		[ {
-	      "wrapperType": "track",
-	      "kind": "podcast",
-	      "artistId": 125443881,
-	      "collectionId": 1057255460,
-	      "trackId": 1057255460,
-	      "artistName": "NPR",
-	      "collectionName": "NPR Politics Podcast",
-	      "trackName": "NPR Politics Podcast",
-	      "collectionCensoredName": "NPR Politics Podcast",
-	      "trackCensoredName": "NPR Politics Podcast",
-	      "artistViewUrl": "https://itunes.apple.com/us/artist/npr/id125443881?mt=2&uo=4",
-	      "collectionViewUrl": "https://itunes.apple.com/us/podcast/npr-politics-podcast/id1057255460?mt=2&uo=4",
-	      "feedUrl": "https://www.npr.org/rss/podcast.php?id=510310",
-	      "trackViewUrl": "https://itunes.apple.com/us/podcast/npr-politics-podcast/id1057255460?mt=2&uo=4",
-	      "artworkUrl30": "http://is2.mzstatic.com/image/thumb/Music111/v4/3e/80/5a/3e805aa4-6b21-6c15-b7c6-fcadfb4d3e82/source/30x30bb.jpg",
-	      "artworkUrl60": "http://is2.mzstatic.com/image/thumb/Music111/v4/3e/80/5a/3e805aa4-6b21-6c15-b7c6-fcadfb4d3e82/source/60x60bb.jpg",
-	      "artworkUrl100": "http://is2.mzstatic.com/image/thumb/Music111/v4/3e/80/5a/3e805aa4-6b21-6c15-b7c6-fcadfb4d3e82/source/100x100bb.jpg",
-	      "collectionPrice": 0,
-	      "trackPrice": 0,
-	      "trackRentalPrice": 0,
-	      "collectionHdPrice": 0,
-	      "trackHdPrice": 0,
-	      "trackHdRentalPrice": 0,
-	      "releaseDate": "2017-02-17T01:56:00Z",
-	      "collectionExplicitness": "notExplicit",
-	      "trackExplicitness": "notExplicit",
-	      "trackCount": 190,
-	      "country": "USA",
-	      "currency": "USD",
-	      "primaryGenreName": "News & Politics",
-	      "artworkUrl600": "http://is2.mzstatic.com/image/thumb/Music111/v4/3e/80/5a/3e805aa4-6b21-6c15-b7c6-fcadfb4d3e82/source/600x600bb.jpg",
-	      "genreIds": [
-	        "1311",
-	        "26",
-	        "1325"
-	      ],
-	      "genres": [
-	        "News & Politics",
-	        "Podcasts",
-	        "Government & Organizations"
-	      ]
-	    }];
-
-	    showModalData(results);
-
-	    function showModalData(podcastArr){
-	    	podcastArr.map(function(podcast) {
-	    		renderModalData(podcast);
-	    	});
-	    }
-
-	    function renderModalData(podcast){
-	    	var modalHtml = `
-					<div class="col-xs-5">
-	    		<img class="img-responsive" src="${podcast.artworkUrl600}">
-					</div>
-					<div class="pod-details col-xs-7">
-						<p>Title: ${podcast.collectionName}</p>
-						<p>By: ${podcast.artistName}</p>
-						<p>Genres: ${getGenres(podcast.genres)} </p>
-						<p><a href="${podcast.collectionViewUrl}">Check out episodes on iTunes</a></p>
-					</div>
-	    	`
-	    	
-	    function getGenres(arr){
-	    	var filteredGenres =	arr.filter(function(genre) {
-	    		return genre.toLowerCase() != "podcasts";
-	    	});
-	    	
-	    	return filteredGenres.join(", ");
-	    }
-	    $(".modal-podcast-info").append(modalHtml)
+  function renderModalData(podcast){
+  	$(".modal-podcast-outer").show();
+  	var modalHtml = `
+			<div class="col-xs-5">
+  		<img class="img-responsive" src="${podcast.artworkUrl600}">
+			</div>
+			<div class="pod-details col-xs-7">
+				<p>Title: ${podcast.collectionName}</p>
+				<p>By: ${podcast.artistName}</p>
+				<p>Genres: ${getGenres(podcast.genres)} </p>
+				<p><a href="${podcast.collectionViewUrl}">Check out episodes on iTunes</a></p>
+			</div>
+  	`
+  	
+	  function getGenres(arr){
+	  	var filteredGenres =	arr.filter(function(genre) {
+	  		return genre.toLowerCase() != "podcasts";
+	  	});
+	  	
+	  	return filteredGenres.join(", ");
 	  }
-
-	  //PODCAST CLICK
-	  // $(".podcast-list").click(".podcast", function(e){
-	  // 	e.preventDefault();
-	  // 	console.log()
-	  // });
+  
+  	$(".modal-podcast-info").append(modalHtml)
+	}
 
 });
