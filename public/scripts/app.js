@@ -88,7 +88,7 @@ $(document).ready(function(){
 	
 
   function renderModalData(podcast){
-  	$(".modal-podcast-outer").show();
+  	$(".modal-podcast-outer").fadeIn();
   	var modalHtml = `
 			<div class="col-xs-5">
   		<img class="img-responsive" src="${podcast.artworkUrl600}">
@@ -114,7 +114,7 @@ $(document).ready(function(){
 
 	//Close modal when you click on the X
 	$(".modal-podcast-inner .fa-times-circle").click(function(){
-		$(".modal-podcast-outer").hide();
+		$(".modal-podcast-outer").fadeOut();
 	});
 
 	//Toggle you list info 
