@@ -10,6 +10,8 @@ $(document).ready(function(){
     var name = $("input[name='name']").val();
     var description = $("input[name='description']").val();
     var data = {name: name, description: description}
+    $(`input[type="text"]`).val("")
+    $('form').toggle(400);
     $.ajax({
       method: "POST",
       url: "/api/podlists",
@@ -24,7 +26,10 @@ $(document).ready(function(){
   $('.pods').on('click', "span", function(){
     var pod = $(this).closest('.podlist');
     var id = $(pod).attr("id")
-    $(pod).remove();
+    $(pod).hide(400);
+    setTimeout(function(){
+      $(pod).remove();
+    },450);
     $.ajax({
       method: "DELETE",
       url: `/api/podlists/${id}`,
@@ -76,7 +81,10 @@ function loadPods(podlists){
     var podlist_id = $(this).closest('.podlist').attr('id');
     var podcast_id = $(this).closest('.podcast').attr('id');
     var url = `/api/podlists/${podlist_id}/podcasts/${podcast_id}`;
-    $(this).closest('.podcast').remove();
+    $(this).closest('.podcast').hide(400);
+    setTimeout(function(){
+      $(this).closest('.podcast').remove();
+    },450)
     $.ajax({
       method: "DELETE",
       url: url,
