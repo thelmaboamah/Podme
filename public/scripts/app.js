@@ -152,10 +152,10 @@ $(document).ready(function(){
 	    $(".modal-podcast-info").append(modalHtml)
 	  }
 
-	  //PODCAST CLICK
-	  // $(".podcast-list").click(".podcast", function(e){
-	  // 	e.preventDefault();
-	  // 	console.log()
-	  // });
+	  // PODCAST CLICK
+	  $("#podcast-list").on("click", ".podcast", function(e){
+	  	e.preventDefault();
+	  	console.log($(this).attr("data-id"));
+	  });
 
 });
