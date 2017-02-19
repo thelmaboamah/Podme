@@ -61,6 +61,8 @@ $(document).ready(function(){
 	  });
 	}
 
+
+
 	function renderPodcast(podcast){
 		var podcastHtml = `<div data-id="${podcast.collectionId}" class="podcast col-xs-6 col-sm-4 col-md-3">
 			<img role="button" class="img-responsive pod-img" src="${podcast.artworkUrl600}" alt="">
@@ -113,6 +115,20 @@ $(document).ready(function(){
 	//Close modal when you click on the X
 	$(".modal-podcast-inner .fa-times-circle").click(function(){
 		$(".modal-podcast-outer").hide();
+	});
+
+	//Toggle you list info 
+	//get data about the podlists available and list them in ul.user-podlists
+	$.ajax({
+		method: "GET",
+		url: "/api/podlists",
+		success: function(json){
+			console.log(json)
+		},
+		error: function(){
+			console.log("error");
+		}
+
 	})
 
 });
