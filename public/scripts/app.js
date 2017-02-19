@@ -1,5 +1,7 @@
+
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
+	$(".modal-podcast-outer").hide();
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
@@ -44,21 +46,52 @@ $(document).ready(function(){
 			podcastArr.forEach(function(podcast){
 				renderPodcast(podcast);
 			})
+		
 		}
 	
-		//Dealing with getting data about specific podcasts to show in modal
+		//Get data about specific podcasts to show in modal
 	  $("#podcast-list").on("click", ".podcast", function(e){
 	  	var collectionId = $(this).attr("data-id");
-	  	console.log(collectionId);
 	  	var foundPodcast = podcastArr.find(function(podcast){
 	  		return podcast.collectionId == collectionId;
 	  	})
-	  	console.log(foundPodcast);
-
 	  	renderModalData(foundPodcast);
 
+	  	//get data about the podlists available and list them in modal ul.user-podlists
+			$.ajax({
+				method: "GET",
+				url: "/api/podlists",
+				success: getPodListsSuccess,
+				error: function(){
+					console.log("error");
+				}
+			});
+			function getPodListsSuccess(listArr){
+				listArr.map(function(podlist){
+					renderPodLists(podlist);
+				});
+			}
+
+			function renderPodLists(podList){
+				var listHtml = 
+				`<li class="podlist-li" data-id="${podList._id}">${podList.name}
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</li>
+				`
+				// $(".user-podlists").empty();
+				$(".user-podlists").append(listHtml);
+			}
+
 	  });
+
+	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts it. I'm gonna let this one go for now.
+		// $(".img-responsive").each(function(){
+		// 	var width = $(this).width();
+		// 	$(this).height(width);
+		// });
 	}
+
+
 
 	function renderPodcast(podcast){
 		var podcastHtml = `<div data-id="${podcast.collectionId}" class="podcast col-xs-6 col-sm-4 col-md-3">
@@ -85,16 +118,16 @@ $(document).ready(function(){
 	
 
   function renderModalData(podcast){
-  	$(".modal-podcast-outer").show();
+  	$(".modal-podcast-outer").fadeIn();
   	var modalHtml = `
-			<div class="col-xs-5">
+			<div class="col-xs-6 col-md-5">
   		<img class="img-responsive" src="${podcast.artworkUrl600}">
 			</div>
-			<div class="pod-details col-xs-7">
-				<p>Title: ${podcast.collectionName}</p>
-				<p>By: ${podcast.artistName}</p>
-				<p>Genres: ${getGenres(podcast.genres)} </p>
-				<p><a href="${podcast.collectionViewUrl}">Check out episodes on iTunes</a></p>
+			<div class="pod-details col-xs-6 col-md-7">
+				<p class="pod-title">Title: <span>${podcast.collectionName}</span></p>
+				<p class="pod-producer">By: <span>${podcast.artistName}</span></p>
+				<p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
+				<p class="pod-episodes"><a href="${podcast.collectionViewUrl}" target="_blank">Check out episodes on iTunes</a></p>
 			</div>
   	`
   	
@@ -106,7 +139,54 @@ $(document).ready(function(){
 	  	return filteredGenres.join(", ");
 	  }
   
-  	$(".modal-podcast-info").append(modalHtml)
+  	$(".modal-podcast-info").html(modalHtml);
 	}
+
+	//Close modal when you click on the X
+	$(".modal-podcast-inner .fa-times").click(function(){
+		$(".modal-podcast-outer").fadeOut();
+
+		//Removes podcast lists so they don't keep appending to the ul
+		$(".user-podlists").empty();
+	});
+
+	//Click on podlist to add or remove current podcast from podlist
+	$(".user-podlists").on("click", ".podlist-li", function(e){
+		var clickedLi = $(this);
+		var listId =$(this).attr("data-id");
+		console.log(listId);
+
+		//Traverse through modal and get values to send the database
+		var innerModal = clickedLi.closest(".modal-podcast-inner");
+		var podcastImg = innerModal.find(".img-responsive");
+		var podcastImgURL = podcastImg.attr("src");
+		var podcastTitle = innerModal.find(".pod-title span").text();
+		var podcastGenres = innerModal.find(".pod-genres span").text();
+				podcastGenres = podcastGenres.split(", ");
+		var podcastProducer = innerModal.find(".pod-producer span").text();
+		var podcastEpisodes = innerModal.find(".pod-episodes a").attr("href");			
+			console.log(podcastEpisodes);
+		var podcastObj = {
+			title: podcastTitle,
+			image: podcastImgURL,
+			genres: podcastGenres,
+			producer: podcastProducer,
+			episodes: podcastEpisodes	
+		}
+		//ONLY PARTIALLY WORKING RIGHT NOW
+		// $.ajax({
+		// 	method: "POST",
+		// 	url: `/api/podlists/${listId}/podcasts`,
+		// 	data: podcastObj,
+		// 	success: podcastAddSuccess,
+		// 	error: function(){console.log("error");}
+		// });
+
+		// //on success, make check show
+		// function podcastAddSuccess(){
+		// 	clickedLi.children(".fa-check").show();
+		// }
+	});
+
 
 });

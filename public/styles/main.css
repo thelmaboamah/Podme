@@ -49,7 +49,8 @@ nav {
       margin: 0 3px; }
     nav form input[type="submit"] {
       font-size: 18px;
-      line-height: 0; }
+      line-height: 0;
+      background: #4cb5f5; }
   @media screen and (min-width: 768px) {
     nav {
       display: flex;
@@ -93,7 +94,8 @@ footer {
   background: #b7b8b6;
   text-align: center; }
   footer p {
-    font-size: 20px; }
+    font-size: 20px;
+    font-weight: bold; }
 
 /******* MODAL STYLES *******/
 .modal-podcast-outer {
@@ -104,12 +106,75 @@ footer {
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.3);
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 0;
-  z-index: 100;
-  display: none; }
+  left: 0; }
   .modal-podcast-outer .modal-podcast-inner {
-    background: yellow; }
+    background: white; }
+    .modal-podcast-outer .modal-podcast-inner .fa-times {
+      position: absolute;
+      right: 8px;
+      top: 4px;
+      font-size: 24px; }
+    .modal-podcast-outer .modal-podcast-inner .modal-podcast-info {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap; }
+    .modal-podcast-outer .modal-podcast-inner .pod-details {
+      font-weight: bold;
+      line-height: 1.2;
+      font-size: 15px;
+      align-self: center; }
+      @media screen and (min-width: 520px) {
+        .modal-podcast-outer .modal-podcast-inner .pod-details {
+          font-size: 18px; } }
+      @media screen and (min-width: 680px) {
+        .modal-podcast-outer .modal-podcast-inner .pod-details {
+          font-size: 24px; } }
+      @media screen and (min-width: 912) {
+        .modal-podcast-outer .modal-podcast-inner .pod-details {
+          font-size: 28px; } }
+      @media screen and (min-width: 912) {
+        .modal-podcast-outer .modal-podcast-inner .pod-details {
+          font-size: 32px; } }
+      .modal-podcast-outer .modal-podcast-inner .pod-details p {
+        margin-bottom: 5px; }
+      .modal-podcast-outer .modal-podcast-inner .pod-details span {
+        font-weight: normal; }
+      .modal-podcast-outer .modal-podcast-inner .pod-details .pod-episodes {
+        background: #333;
+        color: white;
+        padding: 3px;
+        text-align: center;
+        margin-top: 10px; }
+        .modal-podcast-outer .modal-podcast-inner .pod-details .pod-episodes:hover {
+          background: #666666; }
+    .modal-podcast-outer .modal-podcast-inner h3 {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px; }
+    .modal-podcast-outer .modal-podcast-inner .user-podlists {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between; }
+      .modal-podcast-outer .modal-podcast-inner .user-podlists li {
+        font-size: 24px;
+        color: white;
+        display: inline;
+        background: #4cb5f5;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 7px;
+        cursor: pointer;
+        display: flex; }
+        .modal-podcast-outer .modal-podcast-inner .user-podlists li:hover {
+          background: #7cc9f8; }
+        @media screen and (min-width: 768px) {
+          .modal-podcast-outer .modal-podcast-inner .user-podlists li {
+            width: 49%; } }
+        .modal-podcast-outer .modal-podcast-inner .user-podlists li .fa-check {
+          display: none;
+          margin-left: auto;
+          padding: 4px 5px 0 0; }
 
 /*# sourceMappingURL=main.css.map */
