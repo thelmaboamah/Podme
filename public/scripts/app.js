@@ -31,6 +31,7 @@ $(document).ready(function(){
 
 
 	function itunesReqErr(){
+   	//Handle error
    	$("#podcast-list").html(`<p>Sorry, your search did not return any result.</p>`);
 
 	}
@@ -49,7 +50,7 @@ $(document).ready(function(){
 	}
 
 	function renderPodcast(podcast){
-			var podcastHtml = `<div class="podcast col-xs-6 col-sm-4 col-md-3">
+			var podcastHtml = `<div data-id="${podcast.collectionId}" class="podcast col-xs-6 col-sm-4 col-md-3">
 				<img role="button" class="img-responsive pod-img" src="${podcast.artworkUrl600}" alt="">
 				<div class="sub-heading">
 					<h4 role="button" title="${podcast.collectionName}">${elipsify(podcast.collectionName)}</h4>
@@ -150,5 +151,11 @@ $(document).ready(function(){
 	    }
 	    $(".modal-podcast-info").append(modalHtml)
 	  }
+
+	  //PODCAST CLICK
+	  // $(".podcast-list").click(".podcast", function(e){
+	  // 	e.preventDefault();
+	  // 	console.log()
+	  // });
 
 });
