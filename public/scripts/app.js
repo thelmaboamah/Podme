@@ -57,14 +57,38 @@ $(document).ready(function(){
 	  	})
 	  	renderModalData(foundPodcast);
 
+	  	//get data about the podlists available and list them in modal ul.user-podlists
+			$.ajax({
+				method: "GET",
+				url: "/api/podlists",
+				success: getPodListsSuccess,
+				error: function(){
+					console.log("error");
+				}
+			});
+			function getPodListsSuccess(listArr){
+				listArr.map(function(podlist){
+					renderPodLists(podlist);
+				});
+			}
+
+			function renderPodLists(podList){
+				var listHtml = 
+				`<li class="podlist-li" data-id="${podList._id}">${podList.name}
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</li>
+				`
+				// $(".user-podlists").empty();
+				$(".user-podlists").append(listHtml);
+			}
+
 	  });
 
-	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts the image. I'm gonna let this one go for now.
+	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts it. I'm gonna let this one go for now.
 		// $(".img-responsive").each(function(){
 		// 	var width = $(this).width();
 		// 	$(this).height(width);
 		// });
-
 	}
 
 
@@ -103,7 +127,7 @@ $(document).ready(function(){
 				<p>Title: ${podcast.collectionName}</p>
 				<p>By: ${podcast.artistName}</p>
 				<p>Genres: ${getGenres(podcast.genres)} </p>
-				<p><a href="${podcast.collectionViewUrl}">Check out episodes on iTunes</a></p>
+				<p><a href="${podcast.collectionViewUrl}" target="_blank">Check out episodes on iTunes</a></p>
 			</div>
   	`
   	
@@ -121,20 +145,26 @@ $(document).ready(function(){
 	//Close modal when you click on the X
 	$(".modal-podcast-inner .fa-times-circle").click(function(){
 		$(".modal-podcast-outer").fadeOut();
+
+		//Removes podcast lists so they don't keep appending to the ul
+		$(".user-podlists").empty();
 	});
 
-	//Toggle you list info 
-	//get data about the podlists available and list them in ul.user-podlists
-	$.ajax({
-		method: "GET",
-		url: "/api/podlists",
-		success: function(json){
-			// console.log(json)
-		},
-		error: function(){
-			console.log("error");
-		}
+	//Click on podlist to add or remove current podcast from podlist
+	$(".user-podlists").on("click", ".podlist-li", function(e){
+		var listId =$(this).attr("data-id");
+		console.log(listId);
 
-	})
+		$.ajax({
+			method: "POST",
+			url: `/api/podlists/${listId}/podcasts`,
+			data: ,
+			success:
+			error: function(){console.log("error");}
+		});
+
+		//on success, make check show
+	});
+
 
 });
