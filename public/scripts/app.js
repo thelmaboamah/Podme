@@ -174,18 +174,18 @@ $(document).ready(function(){
 			episodes: podcastEpisodes	
 		}
 		//ONLY PARTIALLY WORKING RIGHT NOW
-		// $.ajax({
-		// 	method: "POST",
-		// 	url: `/api/podlists/${listId}/podcasts`,
-		// 	data: podcastObj,
-		// 	success: podcastAddSuccess,
-		// 	error: function(){console.log("error");}
-		// });
+		$.ajax({
+			method: "POST",
+			url: `/api/podlists/${listId}/podcasts`,
+			data: podcastObj,
+			success: podcastAddSuccess,
+			error: function(){console.log("error");}
+		});
 
-		// //on success, make check show
-		// function podcastAddSuccess(){
-		// 	clickedLi.children(".fa-check").show();
-		// }
+		//on success, make check show
+		function podcastAddSuccess(){
+			clickedLi.children(".fa-check").show();
+		}
 	});
 
 
