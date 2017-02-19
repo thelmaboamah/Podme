@@ -6,6 +6,13 @@ $(document).ready(function(){
     var icon = $(this);
     var info = $(this).parents("h2").siblings('.podcast-info');
     info.toggle(400);
+    if(icon.hasClass("fa-plus")){
+      icon.removeClass("fa-plus");
+      icon.addClass("fa-minus")
+    }else{
+      icon.removeClass("fa-minus");
+      icon.addClass("fa-plus")
+    }
   })
 
   $.ajax({
@@ -21,39 +28,40 @@ $(document).ready(function(){
 function loadPods(podlists){
   console.log("WORKING", podlists);
   podlists.forEach(function(podlist){
-    renderPod(podlist)
-    var info = $(this).parents("h2").siblings('.podcast-info');
+    renderPods(podlist)
   })
-  console.log($('.podcast-info').length);
+  $('.sub-heading i').on('click', function(){
+    console.log("remove");
 
+    // $.ajax({
+    //   method: "DELETE",
+    //   url: `/api/podlists/:id/podcasts/:podcast_id`
+    // })
+  })
 }
 
-function renderPod(podlist){
+function renderPods(podlist){
+  var pod_id = podlist._id;
+  console.log(pod_id);
   var div = document.createElement("div");
   $(div).addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 podcast-info");
   podlist.podcasts.forEach(function(podcast){
-    console.log(podcast);
     $(div).append(`
-      <div class="podcast col-xs-6 col-sm-4 col-md-3">
+      <div class="podcast col-xs-6 col-sm-4 col-md-3" id="${podcast._id}">
         <img role="button" class="img-responsive pod-img" src="${podcast.image}" alt="">
         <div class="sub-heading">
           <h4 role="button">${elipsify(podcast.title)}</h4>
-          <i class="fa fa-minus" role="button" aria-hidden="true" title="Add to PodList"></i>
+          <i class="fa fa-times" role="button" aria-hidden="true" title="Add to PodList"></i>
         </div>
       </div>
     `)
   });
-  console.log(div);
+  $(div).css("display", "none");
   var pod = document.createElement("div");
   $(pod).addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 pod-name");
+  $(pod).attr("id", pod_id);
   $(pod).append(`<h2><i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}</h2>`);
   $(pod).append(div);
-  // $('.pods').append(`
-  //   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pod-name">
-  //     <h2><i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}</h2>
-  //     ${div}
-  //   </div>
-  // `)
   $('.pods').append(pod);
 }
 
