@@ -19,7 +19,7 @@ app.get('/', function homepage(req, res) {
 });
 
 app.get('/user', function podlistPage(req, res){
-  res.sendFile(__dirname + '/podlist-page/user.html');
+  res.sendFile(__dirname + '/views/user.html');
 })
 
 app.get('/api', function(req, res){
