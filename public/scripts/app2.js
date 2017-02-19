@@ -23,11 +23,18 @@ $(document).ready(function(){
 
   $('.pods').on('click', "span", function(){
     var pod = $(this).closest('.podlist');
-    console.log($(pod).attr("id"))
-    // $.ajax({
-    //   method: "DELETE",
-    //   url:
-    // })
+    var id = $(pod).attr("id")
+    $(pod).remove();
+    $.ajax({
+      method: "DELETE",
+      url: `/api/podlists/${id}`,
+      success: function(json){
+        console.log("successful delete")
+      },
+      error: function(){
+        console.log("error")
+      }
+    })
     console.log(pod);
   })
 
