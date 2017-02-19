@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
   $('#create').on('click', function(e){
-    $('form').toggle(200);
+    $('.podlist-create').toggle(200);
     // so you can see form why you click add a podlist
     setTimeout(function(){
       $('#submit').focus();
@@ -69,7 +69,7 @@ $(document).ready(function(){
   // get podlist data
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/api/podlists",
+    url: "/api/podlists",
     success: loadPods,
     error: function(){
       console.log("error")
@@ -107,7 +107,7 @@ function renderPods(podlist){
   var pod_id = podlist._id;
   //  div for new podcasts
   var div = document.createElement("div");
-  $(div).addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 podcast-info");
+  $(div).addClass("col-xs-12 podcast-info");
   $(div).css("display", "none");
   //  if playlist has podcasts in it
   if(podlist.podcasts.length){
@@ -117,20 +117,20 @@ function renderPods(podlist){
           <img role="button" class="img-responsive pod-img" src="${podcast.image}" alt="">
           <div class="sub-heading">
             <h4 role="button">${elipsify(podcast.title)}</h4>
-            <i class="fa fa-times" role="button" aria-hidden="true" title="Add to PodList"></i>
+            <i class="fa fa-times" role="button" aria-hidden="true" title="Delete from PodList"></i>
           </div>
         </div>
       `)
     });
   }else{
     // if no podcasts in playlist
-    $(div).append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
+    $(div).append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`) //this does the check for empty playlist when you load but not when you remove all podcast from playlist.
   }
   //  new div for podlist 
   var pod = document.createElement("div");
-  $(pod).addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 podlist");
+  $(pod).addClass("col-xs-12 podlist");
   $(pod).attr("id", pod_id);
-  $(pod).append(`<h2 class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1"><i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}</h2>`);
+  $(pod).append(`<h2><i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}</h2>`);
   $(pod).append(div);
   $('.pods').append(pod);
 }
