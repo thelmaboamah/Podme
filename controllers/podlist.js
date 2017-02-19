@@ -53,7 +53,7 @@ function remove(req, res){
   var id = req.params.id;
   db.Podlist.findOneAndRemove({_id: id}, function(err, response){
     if(err){console.log(err);}
-    res.sendStatus(410);
+    res.sendStatus(204);
   })
 }
 
