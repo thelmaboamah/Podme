@@ -107,7 +107,8 @@ footer {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100; }
+  z-index: 100;
+  display: none; }
   .modal-podcast-outer .modal-podcast-inner {
     background: yellow; }
 
