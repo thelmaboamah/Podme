@@ -28,8 +28,16 @@ app.get('/api', function(req, res){
     gitHub_url: "https://github.com/klawton1/Podme",
     homepage: "https://podme.herokuapp.com/",
     endpoints: [
+      {method: "GET", path: "/user", description: "Gets your Pods page"},
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/podlist", description: "find all podlists"}
+      {method: "GET", path: "/api/podlist", description: "find all podlists"},
+      {method: "GET", path: "/api/podcasts", description: "Get all podcasts in our database"},
+      {method: "GET", path: "/api/podlists/:id", description: "Get a specific podlist"},
+      {method: "GET", path: "/api/podlists/:id/podcasts", description: "get all podcasts in a specific podlist"},
+      {method: "POST", path: "/api/podlists", description: "create a new podlist"},
+      {method: "POST", path: "/api/podlists/:id/podcasts", description: "create a new podcast in a podlist"},
+      {method: "DELETE", path: "/api/podlists/:id", description: "delete a specific podlist"},
+      {method: "DELETE", path: "/api/podlists/:id/podcasts/:podcast_id", description: "delete a specific podcast from a podlist"},
     ]
   })
 });

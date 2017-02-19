@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Pods</title>
+  <title>My Podlists</title>
   <!-- STYLESHEETS -->
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Open+Sans+Condensed:300,700" rel="stylesheet">
@@ -24,10 +24,28 @@
   <script src="/scripts/app2.js"></script>
 </head>
 <body>
-  <h1>MY PODS</h1>
-
+  <header>
+    <div class="container">
+      <h1>MY PODS</h1>
+    </div>
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/user">Your PodLists</a></li>
+        </ul>
+    </nav>
+  </header>
+  <div id="spacer"></div>
   <div class="pods">
     
   </div>
+
+  <button class="btn btn-info" id="create">Add a Podlist</button>
+  <form style="display: none">
+    <label>Name:</label> <br><input type="text" name="name">
+    <br>
+    <label>Description:</label> <br><input type="text" name="description">
+    <input class="btn btn-info" type="submit" value="Create">
+  </form>
 </body>
 </html>
