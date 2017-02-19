@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
+	$(".modal-podcast-outer").hide();
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
@@ -106,7 +107,12 @@ $(document).ready(function(){
 	  	return filteredGenres.join(", ");
 	  }
   
-  	$(".modal-podcast-info").append(modalHtml)
+  	$(".modal-podcast-info").html(modalHtml)
 	}
+
+	//Close modal when you click on the X
+	$(".modal-podcast-inner .fa-times-circle").click(function(){
+		$(".modal-podcast-outer").hide();
+	})
 
 });

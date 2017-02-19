@@ -107,9 +107,13 @@ footer {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
-  display: none; }
+  z-index: 100; }
   .modal-podcast-outer .modal-podcast-inner {
     background: yellow; }
+    .modal-podcast-outer .modal-podcast-inner .fa-times-circle {
+      position: absolute;
+      right: -9px;
+      top: -8px;
+      font-size: 24px; }
 
 /*# sourceMappingURL=main.css.map */
