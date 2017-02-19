@@ -7,7 +7,6 @@ $(document).ready(function(){
   // submit for new podlist
   $('#submit').on('click', function(e){
     e.preventDefault();
-    console.log("SUBMIT");
     var name = $("input[name='name']").val();
     var description = $("input[name='description']").val();
     var data = {name: name, description: description}
@@ -20,7 +19,16 @@ $(document).ready(function(){
         console.log("Error");
       }
     })
-    console.log(data);
+  })
+
+  $('.pods').on('click', "span", function(){
+    var pod = $(this).closest('.podlist');
+    console.log($(pod).attr("id"))
+    // $.ajax({
+    //   method: "DELETE",
+    //   url:
+    // })
+    console.log(pod);
   })
 
   // adds toggle for podlist info
@@ -96,7 +104,7 @@ function renderPods(podlist){
     });
   }else{
     // if no podcasts in playlist
-    $(div).append(`<h3>Add Some Podcasts</h3>`)
+    $(div).append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
   }
   //  new div for podlist 
   var pod = document.createElement("div");
@@ -109,7 +117,6 @@ function renderPods(podlist){
 
 function elipsify(str){
   //Shorten the podcast title so it doesn't break onto a new line and distort content below
-  //How would I do this responsively?
   var shortenedTitle = str.length > 15 ? str.slice(0,16) + "..." : str;
   return shortenedTitle;
 }
