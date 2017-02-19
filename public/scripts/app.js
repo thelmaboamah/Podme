@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
 	$(".modal-podcast-outer").hide();
@@ -45,20 +46,25 @@ $(document).ready(function(){
 			podcastArr.forEach(function(podcast){
 				renderPodcast(podcast);
 			})
+		
 		}
 	
-		//Dealing with getting data about specific podcasts to show in modal
+		//Get data about specific podcasts to show in modal
 	  $("#podcast-list").on("click", ".podcast", function(e){
 	  	var collectionId = $(this).attr("data-id");
-	  	console.log(collectionId);
 	  	var foundPodcast = podcastArr.find(function(podcast){
 	  		return podcast.collectionId == collectionId;
 	  	})
-	  	console.log(foundPodcast);
-
 	  	renderModalData(foundPodcast);
 
 	  });
+
+	  	//Set img height == to width
+		$(".img-responsive").each(function(){
+			var width = $(this).width();
+			$(this).height(width);
+		});
+
 	}
 
 
@@ -123,7 +129,7 @@ $(document).ready(function(){
 		method: "GET",
 		url: "/api/podlists",
 		success: function(json){
-			console.log(json)
+			// console.log(json)
 		},
 		error: function(){
 			console.log("error");
