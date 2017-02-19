@@ -1,7 +1,11 @@
 
 $(document).ready(function(){
 
-  
+  $('#create').on('click', function(e){
+    $('form').toggle(400);
+  })
+
+  // adds toggle for podlist info
   $('.pods').on('click', "h2 i", function(){
     var icon = $(this);
     var info = $(this).parents("h2").siblings('.podcast-info');
@@ -15,6 +19,7 @@ $(document).ready(function(){
     }
   })
 
+  // get podlist data
   $.ajax({
     method: "GET",
     url: "http://localhost:3000/api/podlists",
@@ -26,12 +31,11 @@ $(document).ready(function(){
 })
 
 function loadPods(podlists){
-  console.log("WORKING", podlists);
   podlists.forEach(function(podlist){
     renderPods(podlist)
   })
+  // Remove pocast from podlist on X click
   $('.sub-heading i').on('click', function(){
-    console.log("remove");
     var podlist_id = $(this).closest('.podlist').attr('id');
     var podcast_id = $(this).closest('.podcast').attr('id');
     var url = `/api/podlists/${podlist_id}/podcasts/${podcast_id}`;
@@ -51,7 +55,7 @@ function loadPods(podlists){
 
 function renderPods(podlist){
   var pod_id = podlist._id;
-  console.log(pod_id);
+  //  div for new podcast
   var div = document.createElement("div");
   $(div).addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 podcast-info");
   podlist.podcasts.forEach(function(podcast){
@@ -66,6 +70,7 @@ function renderPods(podlist){
     `)
   });
   $(div).css("display", "none");
+  //  new div for podlist 
   var pod = document.createElement("div");
   $(pod).addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 podlist");
   $(pod).attr("id", pod_id);
@@ -81,6 +86,7 @@ function elipsify(str){
   var shortenedTitle = str.length > 15 ? str.slice(0,16) + "..." : str;
   return shortenedTitle;
 }
+
 
 
 

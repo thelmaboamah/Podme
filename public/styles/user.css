@@ -2,3 +2,21 @@
   background-color: blanchedalmond;
   border-radius: 10px;
 }
+
+#spacer{
+  height: 100px;
+}
+
+input[type="text"] {
+  width: 150px;
+  margin: 0 3px; 
+}
+
+input[type="submit"] {
+  font-size: 18px; 
+}
+
+input[name="description"] {
+  height: 50px;
+  width: 300px;
+}
