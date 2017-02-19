@@ -120,14 +120,14 @@ $(document).ready(function(){
   function renderModalData(podcast){
   	$(".modal-podcast-outer").fadeIn();
   	var modalHtml = `
-			<div class="col-xs-5">
+			<div class="col-xs-6 col-md-5">
   		<img class="img-responsive" src="${podcast.artworkUrl600}">
 			</div>
-			<div class="pod-details col-xs-7">
-				<p>Title: ${podcast.collectionName}</p>
-				<p>By: ${podcast.artistName}</p>
-				<p>Genres: ${getGenres(podcast.genres)} </p>
-				<p><a href="${podcast.collectionViewUrl}" target="_blank">Check out episodes on iTunes</a></p>
+			<div class="pod-details col-xs-6 col-md-7">
+				<p class="pod-title">Title: <span>${podcast.collectionName}</span></p>
+				<p class="pod-producer">By: <span>${podcast.artistName}</span></p>
+				<p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
+				<p class="pod-episodes"><a href="${podcast.collectionViewUrl}" target="_blank">Check out episodes on iTunes</a></p>
 			</div>
   	`
   	
@@ -143,7 +143,7 @@ $(document).ready(function(){
 	}
 
 	//Close modal when you click on the X
-	$(".modal-podcast-inner .fa-times-circle").click(function(){
+	$(".modal-podcast-inner .fa-times").click(function(){
 		$(".modal-podcast-outer").fadeOut();
 
 		//Removes podcast lists so they don't keep appending to the ul
@@ -152,18 +152,40 @@ $(document).ready(function(){
 
 	//Click on podlist to add or remove current podcast from podlist
 	$(".user-podlists").on("click", ".podlist-li", function(e){
+		var clickedLi = $(this);
 		var listId =$(this).attr("data-id");
 		console.log(listId);
 
-		$.ajax({
-			method: "POST",
-			url: `/api/podlists/${listId}/podcasts`,
-			data: ,
-			success:
-			error: function(){console.log("error");}
-		});
+		//Traverse through modal and get values to send the database
+		var innerModal = clickedLi.closest(".modal-podcast-inner");
+		var podcastImg = innerModal.find(".img-responsive");
+		var podcastImgURL = podcastImg.attr("src");
+		var podcastTitle = innerModal.find(".pod-title span").text();
+		var podcastGenres = innerModal.find(".pod-genres span").text();
+				podcastGenres = podcastGenres.split(", ");
+		var podcastProducer = innerModal.find(".pod-producer span").text();
+		var podcastEpisodes = innerModal.find(".pod-episodes a").attr("href");			
+			console.log(podcastEpisodes);
+		var podcastObj = {
+			title: podcastTitle,
+			image: podcastImgURL,
+			genres: podcastGenres,
+			producer: podcastProducer,
+			episodes: podcastEpisodes	
+		}
+		//ONLY PARTIALLY WORKING RIGHT NOW
+		// $.ajax({
+		// 	method: "POST",
+		// 	url: `/api/podlists/${listId}/podcasts`,
+		// 	data: podcastObj,
+		// 	success: podcastAddSuccess,
+		// 	error: function(){console.log("error");}
+		// });
 
-		//on success, make check show
+		// //on success, make check show
+		// function podcastAddSuccess(){
+		// 	clickedLi.children(".fa-check").show();
+		// }
 	});
 
 
