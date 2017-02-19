@@ -59,11 +59,11 @@ $(document).ready(function(){
 
 	  });
 
-	  	//Set img height == to width
-		$(".img-responsive").each(function(){
-			var width = $(this).width();
-			$(this).height(width);
-		});
+	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts the image. I'm gonna let this one go for now.
+		// $(".img-responsive").each(function(){
+		// 	var width = $(this).width();
+		// 	$(this).height(width);
+		// });
 
 	}
 
@@ -115,7 +115,7 @@ $(document).ready(function(){
 	  	return filteredGenres.join(", ");
 	  }
   
-  	$(".modal-podcast-info").html(modalHtml)
+  	$(".modal-podcast-info").html(modalHtml);
 	}
 
 	//Close modal when you click on the X
