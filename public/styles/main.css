@@ -182,6 +182,28 @@ footer {
           padding: 4px 5px 0 0; }
 
 /***** PODLIST PAGE STYLES ******/
+/*** FORM STYLES***/
+#create {
+  background: #4cb5f5;
+  font-size: 18px; }
+
+.podlist-create {
+  font-size: 20px; }
+  .podlist-create label {
+    margin-top: 5px; }
+  .podlist-create input[type="text"] {
+    width: 100%;
+    height: 50px;
+    margin: 0 3px; }
+  .podlist-create input[type="submit"] {
+    font-size: 20px;
+    display: block;
+    margin: 12px auto 30px;
+    background: #4cb5f5;
+    width: 150px; }
+  .podlist-create input[name="description"] {
+    height: 100px; }
+
 .pods .podlist {
   background: #4cf5d6;
   min-height: 100px; }
@@ -189,10 +211,23 @@ footer {
     margin: 0;
     color: white;
     font-weight: bold;
-    padding-top: 20px; }
+    padding: 20px 0 10px; }
     .pods .podlist h2 i {
-      margin-right: 15px; }
+      margin-right: 15px;
+      font-size: 28px; }
 .pods .podlist:nth-child(even) {
   background: #999cff; }
+.pods .fa-times {
+  font-size: 20px; }
+.pods h3 a:hover {
+  cursor: pointer;
+  color: #4cb5f5;
+  font-weight: 700; }
+.pods span {
+  margin-left: 50px; }
+.pods span:hover {
+  cursor: pointer;
+  color: firebrick;
+  font-weight: 700; }
 
 /*# sourceMappingURL=main.css.map */

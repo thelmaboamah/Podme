@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Podlists</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PodMe</title>
+  
   <!-- STYLESHEETS -->
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Open+Sans+Condensed:300,700" rel="stylesheet">
@@ -9,6 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link rel="stylesheet" href="/styles/main.css">
+
   <link rel="stylesheet" type="text/css" href="/styles/user.css">
 
   <!-- VENDOR SCRIPTS -->
@@ -21,31 +25,58 @@
   <script src="https://use.fontawesome.com/eed7e9c564.js"></script>
   
   <!-- APP SCRIPTS -->
+  <script src="/scripts/app.js"></script>
   <script src="/scripts/app2.js"></script>
 </head>
 <body>
   <header>
     <div class="container">
-      <h1>MY PODS</h1>
+      <h1>PodMe</h1>
     </div>
     <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/user">Your PodLists</a></li>
+          <li><a href="/user">My PodLists</a></li>
         </ul>
+        <form role="search" id="itunesSearch" >
+          <label for="searchTerm">Find a Podcast</label>
+          <input name="term" type="text" id="searchTerm">
+          <input type="hidden" name="media" value="podcast">
+          <input type="hidden" name="attribute" value="titleTerm">
+          <input class="btn btn-info" type="submit" value="Search">
+        </form>
     </nav>
   </header>
-  <div id="spacer"></div>
-  <div class="pods">
-    
-  </div>
+  <main class="container user-page">
+    <h2>My PodLists <button class="btn btn-info" id="create">Add a Podlist</button></h2>
+      
+      <form  class="podlist-create col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3" style="display: none">
+        <label>Name:</label> <br><input type="text" name="name">
+        <br>
+        <label>Description:</label> <br><input type="text" name="description">
+        <input id="submit" class="btn btn-info" type="submit" value="Create">
+      </form>
 
-  <button class="btn btn-info" id="create">Add a Podlist</button>
-  <form style="display: none">
-    <label>Name:</label> <br><input type="text" name="name">
-    <br>
-    <label>Description:</label> <br><input type="text" name="description">
-    <input id="submit" class="btn btn-info" type="submit" value="Create">
-  </form>
+    <section>
+     <div class="pods">
+        <!-- Template strings render here -->
+      </div>
+    </section>
+
+   
+   
+
+  </main> 
+  <footer>
+    <p>Made by Koma</p>
+  </footer> 
+
+  
+
+
+
+
+
+
 </body>
 </html>
