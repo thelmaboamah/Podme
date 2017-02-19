@@ -2,34 +2,40 @@
 $(document).ready(function(){
 
   $('#create').on('click', function(e){
-    $('form').toggle(400);
+    $('form').toggle(200);
+    // so you can see form why you click add a podlist
+    setTimeout(function(){
+      $('#submit').focus();
+    }, 200);
   })
   // submit for new podlist
   $('#submit').on('click', function(e){
     e.preventDefault();
     var name = $("input[name='name']").val();
-    var description = $("input[name='description']").val();
-    var data = {name: name, description: description}
-    $(`input[type="text"]`).val("")
-    $('form').toggle(400);
-    $.ajax({
-      method: "POST",
-      url: "/api/podlists",
-      data: data,
-      success: createPodlist,
-      error: function(){
-        console.log("Error");
-      }
-    })
+    if(name.length){
+      var description = $("input[name='description']").val();
+      var data = {name: name, description: description}
+      $(`input[type="text"]`).val("")
+      $('form').toggle(400);
+      $.ajax({
+        method: "POST",
+        url: "/api/podlists",
+        data: data,
+        success: renderPods,
+        error: function(){
+          console.log("Error");
+        }
+      })
+    }else{
+      $("input[name='name']").attr("placeholder", "Enter a Name");
+    }
   })
 
+  // delete podlist
   $('.pods').on('click', "span", function(){
     var pod = $(this).closest('.podlist');
     var id = $(pod).attr("id")
-    $(pod).hide(400);
-    setTimeout(function(){
-      $(pod).remove();
-    },450);
+    $(pod).remove();
     $.ajax({
       method: "DELETE",
       url: `/api/podlists/${id}`,
@@ -40,7 +46,6 @@ $(document).ready(function(){
         console.log("error")
       }
     })
-    console.log(pod);
   })
 
   // adds toggle for podlist info
@@ -134,11 +139,6 @@ function elipsify(str){
   //Shorten the podcast title so it doesn't break onto a new line and distort content below
   var shortenedTitle = str.length > 15 ? str.slice(0,16) + "..." : str;
   return shortenedTitle;
-}
-
-function createPodlist(podlist){
-  renderPods(podlist);
-  console.log(podlist);
 }
 
 

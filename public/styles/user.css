@@ -36,3 +36,6 @@ span:hover{
   color: firebrick;
   font-weight: 700; 
 }
+i{
+  margin-right: 10px;
+}
