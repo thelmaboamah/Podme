@@ -53,12 +53,7 @@ $(document).ready(function(){
 		// Remove event before adding it to avoid duplicates
 	  $("#podcast-list").off("click", ".podcast", podcastClick);
 	  $("#podcast-list").on("click", ".podcast", podcastClick);
-
-	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts it. I'm gonna let this one go for now.
-		// $(".img-responsive").each(function(){
-		// 	var width = $(this).width();
-		// 	$(this).height(width);
-		// });
+	  
 	}
 	
 	//Get data about specific podcasts to show in modal
