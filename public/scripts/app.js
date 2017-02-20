@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
+	var podcastArr = [];
 	$(".modal-podcast-outer").hide();
 	$.ajax({
 		method: "GET",
@@ -38,7 +39,7 @@ $(document).ready(function(){
 
 	function itunesReqSuccess(data){
 		//Handle if empty object is returned	
-		var podcastArr = data.results;
+		podcastArr = data.results;
 		if(data.resultCount == 0){
 			itunesReqErr();
 		} else {
@@ -48,41 +49,10 @@ $(document).ready(function(){
 			})
 		
 		}
-	
-		//Get data about specific podcasts to show in modal
-	  $("#podcast-list").on("click", ".podcast", function(e){
-	  	var collectionId = $(this).attr("data-id");
-	  	var foundPodcast = podcastArr.find(function(podcast){
-	  		return podcast.collectionId == collectionId;
-	  	})
-	  	renderModalData(foundPodcast);
 
-	  	//get data about the podlists available and list them in modal ul.user-podlists
-			$.ajax({
-				method: "GET",
-				url: "/api/podlists",
-				success: getPodListsSuccess,
-				error: function(){
-					console.log("error");
-				}
-			});
-			function getPodListsSuccess(listArr){
-				listArr.map(function(podlist){
-					renderPodLists(podlist);
-				});
-			}
-
-			function renderPodLists(podList){
-				var listHtml = 
-				`<li class="podlist-li" data-id="${podList._id}">${podList.name}
-					<i class="fa fa-check" aria-hidden="true"></i>
-				</li>
-				`
-				// $(".user-podlists").empty();
-				$(".user-podlists").append(listHtml);
-			}
-
-	  });
+		// Remove event before adding it to avoid duplicates
+	  $("#podcast-list").off("click", ".podcast", podcastClick);
+	  $("#podcast-list").on("click", ".podcast", podcastClick);
 
 	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts it. I'm gonna let this one go for now.
 		// $(".img-responsive").each(function(){
@@ -90,7 +60,41 @@ $(document).ready(function(){
 		// 	$(this).height(width);
 		// });
 	}
+	
+	//Get data about specific podcasts to show in modal
+	function podcastClick(e){
+		var collectionId = $(this).attr("data-id");
+		var foundPodcast = podcastArr.find(function(podcast){
+			return podcast.collectionId == collectionId;
+		})
+		renderModalData(foundPodcast);
 
+		//get data about the podlists available and list them in modal ul.user-podlists
+		$.ajax({
+			method: "GET",
+			url: "/api/podlists",
+			success: getPodListsSuccess,
+			error: function(){
+				console.log("error");
+			}
+		});
+	}
+
+	function renderPodLists(podList){
+		var listHtml = 
+		`<li class="podlist-li" data-id="${podList._id}">${podList.name}
+			<i class="fa fa-check" aria-hidden="true"></i>
+		</li>
+		`
+		// $(".user-podlists").empty();
+		$(".user-podlists").append(listHtml);
+	}
+
+	function getPodListsSuccess(listArr){
+		listArr.map(function(podlist){
+			renderPodLists(podlist);
+		});
+	}
 
 
 	function renderPodcast(podcast){
@@ -165,7 +169,7 @@ $(document).ready(function(){
 				podcastGenres = podcastGenres.split(", ");
 		var podcastProducer = innerModal.find(".pod-producer span").text();
 		var podcastEpisodes = innerModal.find(".pod-episodes a").attr("href");			
-			console.log(podcastEpisodes);
+		console.log(podcastEpisodes);
 		var podcastObj = {
 			title: podcastTitle,
 			image: podcastImgURL,
@@ -187,6 +191,4 @@ $(document).ready(function(){
 			clickedLi.children(".fa-check").show();
 		}
 	});
-
-
 });
