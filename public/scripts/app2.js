@@ -1,6 +1,8 @@
 
 $(document).ready(function(){
-
+  //Hide modal when the page loads
+  $(".modal-podcast-outer").hide();
+  
   $('#create').on('click', function(e){
     $('.podlist-create').toggle(200);
     // so you can see form why you click add a podlist
@@ -75,7 +77,24 @@ $(document).ready(function(){
       console.log("error")
     }
   })
-})
+
+  //Get data about specific podcasts to show in modal when clicked
+  $(".pods").on("click", ".podcast", function(e){
+    var id = $(this).attr("id");
+    
+    $.ajax({
+      method: "GET",
+      url:`/api/podcasts/${id}`,
+      success: podcastSearchOnSuccess,
+      error: function(){console.log("error")}
+    });
+
+    function podcastSearchOnSuccess(json){
+      renderModalData(json);
+    }
+  });
+
+});
 
 function loadPods(podlists){
   podlists.forEach(function(podlist){
@@ -141,5 +160,32 @@ function elipsify(str){
   return shortenedTitle;
 }
 
+function renderModalData(podcast){
+    $(".modal-podcast-outer").fadeIn();
+    var modalHtml = `
+      <div class="col-xs-6 col-md-5">
+      <img class="img-responsive" src="${podcast.image}">
+      </div>
+      <div class="pod-details col-xs-6 col-md-7">
+        <p class="pod-title">Title: <span>${podcast.title}</span></p>
+        <p class="pod-producer">By: <span>${podcast.producer}</span></p>
+        <p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
+        <p class="pod-episodes"><a href="${podcast.episodes}" target="_blank">Check out episodes on iTunes</a></p>
+      </div>
+    `
+    
+    function getGenres(arr){   
+      return arr.join(", ");
+    }
+  
+    $(".modal-podcast-info").html(modalHtml);
+  }
 
+  //Close modal when you click on the X
+  $(".modal-podcast-inner .fa-times").click(function(){
+    $(".modal-podcast-outer").fadeOut();
+
+    //Removes podcast lists so they don't keep appending to the ul
+    $(".user-podlists").empty();
+  });
 

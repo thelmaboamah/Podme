@@ -7,6 +7,15 @@ function index(req, res){
   })
 };
 
+function findPodcastById(req, res) {
+  var id = req.params.id;
+
+  db.Podcast.findOne({_id: id}, function(err, podcast){
+    if(err){console.log(err);}
+    res.json(podcast);
+  })
+}
+
 function addToPodlist(req, res){
   var id = req.params.id;
   var info = req.body;
@@ -56,5 +65,6 @@ function removeFromPodlist(req, res){
 module.exports = {
   index: index,
   addToPodlist: addToPodlist,
-  removeFromPodlist: removeFromPodlist
+  removeFromPodlist: removeFromPodlist,
+  findPodcastById: findPodcastById
 }
