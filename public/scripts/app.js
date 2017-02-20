@@ -10,7 +10,7 @@ $(document).ready(function(){
 		data: {
 			media: "podcast",
 			attribute: "descriptionTerm",
-			term: randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"])
+			term: randomize(["music", "tech", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"])
 		},
 		success: itunesReqSuccess,
 		error: itunesReqErr
@@ -170,7 +170,7 @@ $(document).ready(function(){
 			producer: podcastProducer,
 			episodes: podcastEpisodes	
 		}
-		//ONLY PARTIALLY WORKING RIGHT NOW
+
 		$.ajax({
 			method: "POST",
 			url: `/api/podlists/${listId}/podcasts`,
@@ -180,8 +180,22 @@ $(document).ready(function(){
 		});
 
 		//on success, make check show
-		function podcastAddSuccess(){
-			clickedLi.children(".fa-check").show();
+		function podcastAddSuccess(res){
+
+			//if object returned, mark check else it's already in that podlist
+			if (typeof(res) == "object") {
+				clickedLi.children(".fa-check").show();
+			} else {
+				clickedLi.children(".fa-check").hide();
+				var span = res;
+				clickedLi.append(span);				
+				setTimeout(function(){
+				
+					$(".included").fadeOut(800);
+
+				}, 800);
+			}
+
 		}
 	});
 });
