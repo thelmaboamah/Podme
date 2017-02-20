@@ -62,12 +62,7 @@ $(document).ready(function(){
 		// Remove event before adding it to avoid duplicates
 	  $("#podcast-list").off("click", ".podcast", podcastClick);
 	  $("#podcast-list").on("click", ".podcast", podcastClick);
-
-	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts it. I'm gonna let this one go for now.
-		// $(".img-responsive").each(function(){
-		// 	var width = $(this).width();
-		// 	$(this).height(width);
-		// });
+	  
 	}
 	
 	//Get data about specific podcasts to show in modal
@@ -184,7 +179,7 @@ $(document).ready(function(){
 			producer: podcastProducer,
 			episodes: podcastEpisodes	
 		}
-		//ONLY PARTIALLY WORKING RIGHT NOW
+
 		$.ajax({
 			method: "POST",
 			url: `/api/podlists/${listId}/podcasts`,
@@ -194,8 +189,22 @@ $(document).ready(function(){
 		});
 
 		//on success, make check show
-		function podcastAddSuccess(){
-			clickedLi.children(".fa-check").show();
+		function podcastAddSuccess(res){
+
+			//if object returned, mark check else it's already in that podlist
+			if (typeof(res) == "object") {
+				clickedLi.children(".fa-check").show();
+			} else {
+				clickedLi.children(".fa-check").hide();
+				var span = res;
+				clickedLi.append(span);				
+				setTimeout(function(){
+				
+					$(".included").fadeOut(800);
+
+				}, 800);
+			}
+
 		}
 	});
 });

@@ -1,4 +1,3 @@
-/* light blue b3dcff*/
 body {
   font-family: 'Open Sans Condensed', sans-serif; }
 
@@ -10,6 +9,8 @@ h1 {
   text-align: center;
   font-size: 66px;
   margin-bottom: 13px; }
+  h1:hover {
+    color: #999cff; }
 
 h3 {
   text-align: center; }
@@ -188,6 +189,8 @@ footer {
           display: none;
           margin-left: auto;
           padding: 4px 5px 0 0; }
+        .modal-podcast-outer .modal-podcast-inner .user-podlists li .included {
+          margin-left: auto; }
 
 /***** PODLIST PAGE STYLES ******/
 /*** FORM STYLES***/

@@ -36,7 +36,7 @@ function addToPodlist(req, res){
           })
           // If included do not add
           if(podcastIncluded){
-            res.send("<p>INCLUDED</p>");
+            res.send(`<span class="included">Already included.</span>`);
           }else{
             // If not included then add to podlist
             podlist.podcasts.push(podcast);
