@@ -32,6 +32,7 @@ app.get('/api', function(req, res){
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/podlist", description: "find all podlists"},
       {method: "GET", path: "/api/podcasts", description: "Get all podcasts in our database"},
+      {method: "GET", path: "/api/podcasts/:id", description: "Get one podcast by it's id"},
       {method: "GET", path: "/api/podlists/:id", description: "Get a specific podlist"},
       {method: "GET", path: "/api/podlists/:id/podcasts", description: "get all podcasts in a specific podlist"},
       {method: "POST", path: "/api/podlists", description: "create a new podlist"},
@@ -45,6 +46,8 @@ app.get('/api', function(req, res){
 app.get('/api/podlists', controllers.podlist.index)
 
 app.get('/api/podcasts', controllers.podcast.index)
+
+app.get('/api/podcasts/:id', controllers.podcast.findPodcastById)
 
 app.get('/api/podlists/:id', controllers.podlist.find)
 
