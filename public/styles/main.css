@@ -101,6 +101,14 @@ footer {
   footer p {
     font-size: 20px;
     font-weight: bold; }
+  footer a {
+    background: white; }
+  footer #kody {
+    color: #4cf5d6;
+    padding: 1px 0 1px 5px; }
+  footer #thelma {
+    color: #999cff;
+    padding: 1px 5px 1px 0; }
 
 /******* MODAL STYLES *******/
 .modal-podcast-outer {
@@ -221,7 +229,7 @@ footer {
   font-size: 20px; }
 .pods h3 a:hover {
   cursor: pointer;
-  color: #4cb5f5;
+  color: white;
   font-weight: 700; }
 .pods span {
   margin-left: 50px; }
