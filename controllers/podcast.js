@@ -21,9 +21,9 @@ function addToPodlist(req, res){
   var info = req.body;
   db.Podlist.findOne({_id: id}, function(err, podlist){
     if(err){console.log(err);}
-    db.Podcast.find(info, function(err, podcast){
+    db.Podcast.findOne(info, function(err, podcast){
       if(err){console.log(err);}
-      if(podcast.length){
+      if(podcast !== null){
         //  If podcast already exists in db
         podlist.podcasts.push(podcast);
         podlist.save(function(err, podlist){
