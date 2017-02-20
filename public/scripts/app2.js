@@ -1,10 +1,9 @@
 
 $(document).ready(function(){
-  //Hide modal when the page loads
   
   $('#create').on('click', function(e){
     $('.podlist-create').toggle(200);
-    // so you can see form why you click add a podlist
+    // so you can see form while you click add a podlist
     setTimeout(function(){
       $('#submit').focus();
     }, 200);
@@ -40,7 +39,7 @@ $(document).ready(function(){
     $.ajax({
       method: "DELETE",
       url: `/api/podlists/${id}`,
-      success: function(json){
+      success: function(){
         console.log("successful delete")
       },
       error: function(){
@@ -96,6 +95,7 @@ function loadPods(podlists){
   })
   // Remove pocast from podlist on X click
   $('.sub-heading i').on('click', function(){
+    var parentdiv = $(this).closest(".podcast-info");
     var podlist_id = $(this).closest('.podlist').attr('id');
     var podcast_id = $(this).closest('.podcast').attr('id');
     var url = `/api/podlists/${podlist_id}/podcasts/${podcast_id}`;
@@ -106,8 +106,11 @@ function loadPods(podlists){
     $.ajax({
       method: "DELETE",
       url: url,
-      success: function(json){
-        console.log(json);
+      success: function(){     
+        //if podcast array is length 0, render the add podcast/remove list options
+        if (json.podcasts.length == 0){
+          parentdiv.append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
+        }
       },
       error: function(json){
         console.log("error");
@@ -137,7 +140,7 @@ function renderPods(podlist){
     });
   }else{
     // if no podcasts in playlist
-    $(div).append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`) //this does the check for empty playlist when you load but not when you remove all podcast from playlist.
+    $(div).append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
   }
   //  new div for podlist 
   var pod = document.createElement("div");
