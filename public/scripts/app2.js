@@ -1,6 +1,13 @@
 
 $(document).ready(function(){
-  
+  $("#itunesSearch input[type=submit]").on('click', function(e){
+    e.preventDefault();
+    var term = $("input[name=term]").val();
+    console.log(term);
+    document.cookie = `search=${term}`;
+    window.location.replace("/")
+  })
+
   $('#create').on('click', function(e){
     $('.podlist-create').toggle(200);
     // so you can see form while you click add a podlist
