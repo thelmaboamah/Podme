@@ -158,7 +158,6 @@ $(document).ready(function(){
 	$(".user-podlists").on("click", ".podlist-li", function(e){
 		var clickedLi = $(this);
 		var listId =$(this).attr("data-id");
-		console.log(listId);
 
 		//Traverse through modal and get values to send the database
 		var innerModal = clickedLi.closest(".modal-podcast-inner");
@@ -169,7 +168,6 @@ $(document).ready(function(){
 				podcastGenres = podcastGenres.split(", ");
 		var podcastProducer = innerModal.find(".pod-producer span").text();
 		var podcastEpisodes = innerModal.find(".pod-episodes a").attr("href");			
-		console.log(podcastEpisodes);
 		var podcastObj = {
 			title: podcastTitle,
 			image: podcastImgURL,
