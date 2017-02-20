@@ -39,9 +39,7 @@ $(document).ready(function(){
 
 	function itunesReqSuccess(data){
 		//Handle if empty object is returned	
-		console.log("DATA", data);
 		podcastArr = data.results;
-		console.log("RESULTS ARRAY", podcastArr);
 		if(data.resultCount == 0){
 			itunesReqErr();
 		} else {
@@ -51,29 +49,10 @@ $(document).ready(function(){
 			})
 		
 		}
-	
-		//Get data about specific podcasts to show in modal
-	  $("#podcast-list").on("click", ".podcast", function(e){
-	  	var collectionId = $(this).attr("data-id");
-	  	console.log("CLICKED PODCAST", $(this))
-	  	var foundPodcast = podcastArr.find(function(podcast){
-	  		return podcast.collectionId == collectionId;
-	  	})
-	  	debugger;
-	  	renderModalData(foundPodcast);
 
-	  	//get data about the podlists available and list them in modal ul.user-podlists
-			$.ajax({
-				method: "GET",
-				url: "/api/podlists",
-				success: getPodListsSuccess,
-				error: function(){
-					console.log("error");
-				}
-			});
-
-
-	  });
+		// Remove event before adding it to avoid duplicates
+	  $("#podcast-list").off("click", ".podcast", podcastClick);
+	  $("#podcast-list").on("click", ".podcast", podcastClick);
 
 	  	//Set img height == to width, this isn't working right yet. The image is responsive but with this the height becomes fixed and distorts it. I'm gonna let this one go for now.
 		// $(".img-responsive").each(function(){
@@ -81,22 +60,41 @@ $(document).ready(function(){
 		// 	$(this).height(width);
 		// });
 	}
+	
+	//Get data about specific podcasts to show in modal
+	function podcastClick(e){
+		var collectionId = $(this).attr("data-id");
+		var foundPodcast = podcastArr.find(function(podcast){
+			return podcast.collectionId == collectionId;
+		})
+		renderModalData(foundPodcast);
 
-function renderPodLists(podList){
-	var listHtml = 
-	`<li class="podlist-li" data-id="${podList._id}">${podList.name}
-		<i class="fa fa-check" aria-hidden="true"></i>
-	</li>
-	`
-	// $(".user-podlists").empty();
-	$(".user-podlists").append(listHtml);
-}
+		//get data about the podlists available and list them in modal ul.user-podlists
+		$.ajax({
+			method: "GET",
+			url: "/api/podlists",
+			success: getPodListsSuccess,
+			error: function(){
+				console.log("error");
+			}
+		});
+	}
 
-function getPodListsSuccess(listArr){
-	listArr.map(function(podlist){
-		renderPodLists(podlist);
-	});
-}
+	function renderPodLists(podList){
+		var listHtml = 
+		`<li class="podlist-li" data-id="${podList._id}">${podList.name}
+			<i class="fa fa-check" aria-hidden="true"></i>
+		</li>
+		`
+		// $(".user-podlists").empty();
+		$(".user-podlists").append(listHtml);
+	}
+
+	function getPodListsSuccess(listArr){
+		listArr.map(function(podlist){
+			renderPodLists(podlist);
+		});
+	}
 
 
 	function renderPodcast(podcast){
@@ -193,6 +191,4 @@ function getPodListsSuccess(listArr){
 			clickedLi.children(".fa-check").show();
 		}
 	});
-
-
 });
