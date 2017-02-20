@@ -75,7 +75,27 @@ $(document).ready(function(){
       console.log("error")
     }
   })
-})
+
+  //Get data about specific podcasts to show in modal
+  $(".pods").on("click", ".podcast", function(e){
+    var id = $(this).attr("id");
+    
+    $.ajax({
+      method: "GET",
+      url:`/api/podcasts/${id}`,
+      success: function(json){console.log(json)},
+      error: function(){console.log("error")}
+    });
+
+
+    // var foundPodcast = podcastArr.find(function(podcast){
+    //   return podcast.collectionId == collectionId;
+    // })
+    // renderModalData(foundPodcast);
+
+  });
+
+});
 
 function loadPods(podlists){
   podlists.forEach(function(podlist){
@@ -141,5 +161,36 @@ function elipsify(str){
   return shortenedTitle;
 }
 
+function renderModalData(podcast){
+    $(".modal-podcast-outer").fadeIn();
+    var modalHtml = `
+      <div class="col-xs-6 col-md-5">
+      <img class="img-responsive" src="${podcast.artworkUrl600}">
+      </div>
+      <div class="pod-details col-xs-6 col-md-7">
+        <p class="pod-title">Title: <span>${podcast.collectionName}</span></p>
+        <p class="pod-producer">By: <span>${podcast.artistName}</span></p>
+        <p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
+        <p class="pod-episodes"><a href="${podcast.collectionViewUrl}" target="_blank">Check out episodes on iTunes</a></p>
+      </div>
+    `
+    
+    function getGenres(arr){
+      var filteredGenres =  arr.filter(function(genre) {
+        return genre.toLowerCase() != "podcasts";
+      });
+      
+      return filteredGenres.join(", ");
+    }
+  
+    $(".modal-podcast-info").html(modalHtml);
+  }
 
+  //Close modal when you click on the X
+  $(".modal-podcast-inner .fa-times").click(function(){
+    $(".modal-podcast-outer").fadeOut();
+
+    //Removes podcast lists so they don't keep appending to the ul
+    $(".user-podlists").empty();
+  });
 
