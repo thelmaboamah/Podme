@@ -2,15 +2,24 @@
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
 	var podcastArr = [];
-
+	if(document.cookie){
+		var cookies = document.cookie.split("=")
+		var term = cookies[1];
+		var attribute = "titleTerm"
+	}else{
+		var term = randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"]);
+		var attribute = "descriptionTerm"
+	}
+	document.cookie = "search=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	console.log(term);
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
 		dataType: "jsonp",
 		data: {
 			media: "podcast",
-			attribute: "descriptionTerm",
-			term: randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"])
+			attribute: attribute,
+			term: term
 		},
 		success: itunesReqSuccess,
 		error: itunesReqErr
