@@ -189,6 +189,8 @@ footer {
           display: none;
           margin-left: auto;
           padding: 4px 5px 0 0; }
+        .modal-podcast-outer .modal-podcast-inner .user-podlists li .included {
+          margin-left: auto; }
 
 /***** PODLIST PAGE STYLES ******/
 /*** FORM STYLES***/
