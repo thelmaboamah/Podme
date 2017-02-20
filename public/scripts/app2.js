@@ -1,6 +1,8 @@
 
 $(document).ready(function(){
-
+  //Hide modal when the page loads
+  $(".modal-podcast-outer").hide();
+  
   $('#create').on('click', function(e){
     $('.podlist-create').toggle(200);
     // so you can see form why you click add a podlist
@@ -76,23 +78,20 @@ $(document).ready(function(){
     }
   })
 
-  //Get data about specific podcasts to show in modal
+  //Get data about specific podcasts to show in modal when clicked
   $(".pods").on("click", ".podcast", function(e){
     var id = $(this).attr("id");
     
     $.ajax({
       method: "GET",
       url:`/api/podcasts/${id}`,
-      success: function(json){console.log(json)},
+      success: podcastSearchOnSuccess,
       error: function(){console.log("error")}
     });
 
-
-    // var foundPodcast = podcastArr.find(function(podcast){
-    //   return podcast.collectionId == collectionId;
-    // })
-    // renderModalData(foundPodcast);
-
+    function podcastSearchOnSuccess(json){
+      renderModalData(json);
+    }
   });
 
 });
@@ -165,22 +164,18 @@ function renderModalData(podcast){
     $(".modal-podcast-outer").fadeIn();
     var modalHtml = `
       <div class="col-xs-6 col-md-5">
-      <img class="img-responsive" src="${podcast.artworkUrl600}">
+      <img class="img-responsive" src="${podcast.image}">
       </div>
       <div class="pod-details col-xs-6 col-md-7">
-        <p class="pod-title">Title: <span>${podcast.collectionName}</span></p>
-        <p class="pod-producer">By: <span>${podcast.artistName}</span></p>
+        <p class="pod-title">Title: <span>${podcast.title}</span></p>
+        <p class="pod-producer">By: <span>${podcast.producer}</span></p>
         <p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
-        <p class="pod-episodes"><a href="${podcast.collectionViewUrl}" target="_blank">Check out episodes on iTunes</a></p>
+        <p class="pod-episodes"><a href="${podcast.episodes}" target="_blank">Check out episodes on iTunes</a></p>
       </div>
     `
     
-    function getGenres(arr){
-      var filteredGenres =  arr.filter(function(genre) {
-        return genre.toLowerCase() != "podcasts";
-      });
-      
-      return filteredGenres.join(", ");
+    function getGenres(arr){   
+      return arr.join(", ");
     }
   
     $(".modal-podcast-info").html(modalHtml);
