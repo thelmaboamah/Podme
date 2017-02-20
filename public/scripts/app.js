@@ -2,7 +2,7 @@
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
 	var podcastArr = [];
-	$(".modal-podcast-outer").hide();
+
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
@@ -122,7 +122,7 @@ $(document).ready(function(){
 	
 
   function renderModalData(podcast){
-  	$(".modal-podcast-outer").fadeIn();
+  	$(".modal-podcast-outer").fadeIn().css("display", "flex");
   	var modalHtml = `
 			<div class="col-xs-6 col-md-5">
   		<img class="img-responsive" src="${podcast.artworkUrl600}">

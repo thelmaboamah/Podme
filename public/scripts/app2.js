@@ -1,7 +1,6 @@
 
 $(document).ready(function(){
   //Hide modal when the page loads
-  $(".modal-podcast-outer").hide();
   
   $('#create').on('click', function(e){
     $('.podlist-create').toggle(200);
@@ -156,7 +155,7 @@ function elipsify(str){
 }
 
 function renderModalData(podcast){
-    $(".modal-podcast-outer").fadeIn();
+    $(".modal-podcast-outer").fadeIn().css("display", "flex");;
     var modalHtml = `
       <div class="col-xs-6 col-md-5">
       <img class="img-responsive" src="${podcast.image}">
