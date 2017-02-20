@@ -79,19 +79,14 @@ $(document).ready(function(){
   })
 
   //Get data about specific podcasts to show in modal when clicked
-  $(".pods").on("click", ".podcast", function(e){
-    var id = $(this).attr("id");
-    
+  $(".pods").on("click", ".podcast img", function(e){
+    var id = $(this).closest(".podcast").attr("id");
     $.ajax({
       method: "GET",
       url:`/api/podcasts/${id}`,
-      success: podcastSearchOnSuccess,
+      success: renderModalData,
       error: function(){console.log("error")}
     });
-
-    function podcastSearchOnSuccess(json){
-      renderModalData(json);
-    }
   });
 
 });
