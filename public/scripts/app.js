@@ -30,7 +30,6 @@ $(document).ready(function(){
 
 	deleteAllCookies();
 
-	console.log("TERM",term);
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
@@ -97,8 +96,8 @@ $(document).ready(function(){
 			method: "GET",
 			url: "/api/podlists",
 			success: getPodListsSuccess,
-			error: function(){
-				console.log("error");
+			error: function(err){
+				console.log(err);
 			}
 		});
 	}
@@ -204,7 +203,7 @@ $(document).ready(function(){
 			url: `/api/podlists/${listId}/podcasts`,
 			data: podcastObj,
 			success: podcastAddSuccess,
-			error: function(){console.log("error");}
+			error: function(err){console.log(err);}
 		});
 
 		//on success, make check show
