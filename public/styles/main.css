@@ -31,6 +31,10 @@ ul {
   list-style: none;
   -webkit-padding-start: 0px; }
 
+.sorry {
+  font-size: 28px;
+  color: #4cb5f5; }
+
 /**** NAVIGATION ******/
 nav {
   background: blanchedalmond; }
