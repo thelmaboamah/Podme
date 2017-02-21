@@ -22,7 +22,7 @@ $(document).ready(function(){
       var description = $("input[name='description']").val();
       var data = {name: name, description: description}
       $(`input[type="text"]`).val("")
-      $('form').toggle(400);
+      $('.podlist-create').toggle(400);
       $.ajax({
         method: "POST",
         url: "/api/podlists",
