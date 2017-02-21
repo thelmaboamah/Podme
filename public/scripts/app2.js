@@ -38,7 +38,7 @@ $(document).ready(function(){
   })
 
   // delete podlist
-  $('.pods').on('click', "span", function(){
+  $('.pods').on('click', ".remove", function(){
     var pod = $(this).closest('.podlist');
     var id = $(pod).attr("id")
     $(pod).remove();
@@ -98,7 +98,40 @@ $(document).ready(function(){
     $(".user-podlists").empty();
   });
 
+  //Edit podlist info
+  $(".pods").on("click", ".edit-list-info", function(){
+    //get id of closest podlist div
+    var id = $(this).closest(".podlist").attr("id");
+    //set it to form div
+    // $(".edit-form").attr("data-id", id).show();
+    $(".edit-form").show()
+    // console.log(id);
+    $(".edit-form form").submit(function(e){
+      e.preventDefault();
+      var data = $(this).serialize();
+
+      $.ajax({
+        method: "PUT",
+        url: `/api/podlists/${id}`,
+        data: data,
+        success: updateListSuccess,
+        error: function(err){console.log(err);}
+      });
+      function updateListSuccess(podlist){
+        var podDiv = $(`div[id="${podlist._id}"]`);
+          podDiv.children("h2").html(`<i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}<span role="button" class="edit-list-info">Edit</span>`);
+      }
+      $(this).trigger("reset");
+      $(this).parent().fadeOut();
+    });
+    $(".edit-form .fa-times").click(function(){
+      $(".edit-form").fadeOut();
+    })
+
+  });
 });
+
+
 
 function loadPods(podlists){
   podlists.forEach(function(podlist){
@@ -151,13 +184,13 @@ function renderPods(podlist){
     });
   }else{
     // if no podcasts in playlist
-    $(div).append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
+    $(div).append(`<h3><a href="/">Add Podcasts</a> <span class="remove">Remove Podlist</span></h3>`)
   }
   //  new div for podlist 
   var pod = document.createElement("div");
   $(pod).addClass("col-xs-12 podlist");
   $(pod).attr("id", pod_id);
-  $(pod).append(`<h2><i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}</h2>`);
+  $(pod).append(`<h2><i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}<span role="button" class="edit-list-info">Edit</span></h2>`);
   $(pod).append(div);
   $('.pods').append(pod);
 }
