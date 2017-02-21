@@ -97,15 +97,14 @@ $(document).ready(function(){
     //Removes podcast lists so they don't keep appending to the ul
     $(".user-podlists").empty();
   });
-
+  var id;
   //Edit podlist info
   $(".pods").on("click", ".edit-list-info", function(){
     //get id of closest podlist div
-    var id = $(this).closest(".podlist").attr("id");
+    
+    id = $(this).closest(".podlist").attr("id");
     //set it to form div
-    // $(".edit-form").attr("data-id", id).show();
     $(".edit-form").show()
-    // console.log(id);
     $(".edit-form form").submit(function(e){
       e.preventDefault();
       var data = $(this).serialize();
@@ -120,14 +119,17 @@ $(document).ready(function(){
           success: updateListSuccess,
           error: function(err){console.log(err);}
         });
+        
         function updateListSuccess(podlist){
           var podDiv = $(`div[id="${podlist._id}"]`);
-            podDiv.children("h2").html(`<i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}<span role="button" class="edit-list-info">Edit</span>`);
+          podDiv.children("h2").html(`<i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}<span role="button" class="edit-list-info">Edit</span>`);
         }
         $(this).trigger("reset");
         $(this).parent().fadeOut(); 
       }
     });
+
+
     $(".edit-form .fa-times").click(function(){
       $(".edit-form").fadeOut();
     })
