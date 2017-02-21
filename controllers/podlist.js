@@ -43,7 +43,7 @@ function edit(req, res){
   if(req.body.description){
     edits.description = req.body.description;
   }
-  db.Podlist.findOneAndUpdate({_id: id}, edits, function(err, podlist){
+  db.Podlist.findOneAndUpdate({_id: id}, edits, { new:true }, function(err, podlist){
     if(err){console.log(err);}
     res.json(podlist);
   })

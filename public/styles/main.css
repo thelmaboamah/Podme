@@ -234,11 +234,53 @@ footer {
   cursor: pointer;
   color: white;
   font-weight: 700; }
-.pods span {
+.pods .remove {
   margin-left: 50px; }
-.pods span:hover {
+.pods .remove:hover {
   cursor: pointer;
   color: firebrick;
   font-weight: 700; }
+
+/*edit button styles*/
+.edit-list-info {
+  font-weight: normal;
+  font-size: 13px;
+  margin-left: 10px;
+  background: #333;
+  position: relative;
+  top: -3px;
+  padding: 0 3px;
+  border-radius: 3px; }
+
+.edit-form {
+  position: fixed;
+  top: 30%;
+  left: 15%;
+  width: 300px;
+  height: 270px;
+  background: #eaeaea;
+  display: none; }
+  .edit-form .fa-times {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 15px; }
+  .edit-form form {
+    margin: 10px 0; }
+  .edit-form label {
+    display: block;
+    font-size: 20px; }
+  .edit-form #listname, .edit-form #listdesc {
+    width: 100%; }
+  .edit-form #listname {
+    height: 40px; }
+  .edit-form #listdesc {
+    height: 75px; }
+  .edit-form .btn-info {
+    background: #4cb5f5;
+    font-size: 20px;
+    display: block;
+    margin: 10px auto;
+    width: 120px; }
 
 /*# sourceMappingURL=main.css.map */
