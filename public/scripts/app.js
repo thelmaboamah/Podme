@@ -12,22 +12,25 @@ $(document).ready(function(){
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 	}
-	
-	var term = "";
+	var haveSearch = false;
 	var cookies = document.cookie.split(";");
-	cookies.map(function(cookie){
-		if(cookie.includes("search")){
+	var term;
+	var attribute;
+	// look through each cookie for search
+	cookies.forEach(function(cookie){
+		if(cookie.includes("search=")){
 			var terms = cookie.split("=")
 			term = terms[1]; 
+			attribute = "titleTerm"
+			haveSearch = true;
 		}
 	})
-	if(document.cookie){
-		var attribute = "titleTerm"
-	}else{
-		var term = randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"]);
-		var attribute = "descriptionTerm"
+	// if no search term
+	if(!haveSearch){
+		term = randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"]);
+		attribute = "descriptionTerm"
 	}
-
+	
 	deleteAllCookies();
 
 	$.ajax({

@@ -90,6 +90,14 @@ $(document).ready(function(){
     });
   });
 
+  //Close modal when you click on the X
+  $(".modal-podcast-inner i").click(function(){
+    $(".modal-podcast-outer").fadeOut();
+
+    //Removes podcast lists so they don't keep appending to the ul
+    $(".user-podlists").empty();
+  });
+
 });
 
 function loadPods(podlists){
@@ -161,31 +169,23 @@ function elipsify(str){
 }
 
 function renderModalData(podcast){
-    $(".modal-podcast-outer").fadeIn().css("display", "flex");;
-    var modalHtml = `
-      <div class="col-xs-6 col-md-5">
-      <img class="img-responsive" src="${podcast.image}">
-      </div>
-      <div class="pod-details col-xs-6 col-md-7">
-        <p class="pod-title">Title: <span>${podcast.title}</span></p>
-        <p class="pod-producer">By: <span>${podcast.producer}</span></p>
-        <p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
-        <p class="pod-episodes"><a href="${podcast.episodes}" target="_blank">Check out episodes on iTunes</a></p>
-      </div>
-    `
-    
-    function getGenres(arr){   
-      return arr.join(", ");
-    }
+  $(".modal-podcast-outer").fadeIn().css("display", "flex");;
+  var modalHtml = `
+    <div class="col-xs-6 col-md-5">
+    <img class="img-responsive" src="${podcast.image}">
+    </div>
+    <div class="pod-details col-xs-6 col-md-7">
+      <p class="pod-title">Title: <span>${podcast.title}</span></p>
+      <p class="pod-producer">By: <span>${podcast.producer}</span></p>
+      <p class="pod-genres">Genres: <span>${getGenres(podcast.genres)}</span> </p>
+      <p class="pod-episodes"><a href="${podcast.episodes}" target="_blank">Check out episodes on iTunes</a></p>
+    </div>
+  `
   
-    $(".modal-podcast-info").html(modalHtml);
+  function getGenres(arr){   
+    return arr.join(", ");
   }
 
-  //Close modal when you click on the X
-  $(".modal-podcast-inner .fa-times").click(function(){
-    $(".modal-podcast-outer").fadeOut();
+  $(".modal-podcast-info").html(modalHtml);
 
-    //Removes podcast lists so they don't keep appending to the ul
-    $(".user-podlists").empty();
-  });
-
+}
