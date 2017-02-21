@@ -2,16 +2,35 @@
 $(document).ready(function(){
 	//Search iTunes API and load results on page load
 	var podcastArr = [];
+
+	function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+	}
+	
+	var term = "";
+	var cookies = document.cookie.split(";");
+	cookies.map(function(cookie){
+		if(cookie.includes("search")){
+			var terms = cookie.split("=")
+			term = terms[1]; 
+		}
+	})
 	if(document.cookie){
-		var cookies = document.cookie.split("=")
-		var term = cookies[1];
 		var attribute = "titleTerm"
 	}else{
 		var term = randomize(["music", "politics", "news", "pop culture", "global affairs", "soccer", "books", "food"]);
 		var attribute = "descriptionTerm"
 	}
-	document.cookie = "search=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-	console.log(term);
+
+	deleteAllCookies();
+
+	console.log("TERM",term);
 	$.ajax({
 		method: "GET",
 		url: "https://itunes.apple.com/search",
