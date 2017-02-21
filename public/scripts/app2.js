@@ -3,7 +3,6 @@ $(document).ready(function(){
   $("#itunesSearch input[type=submit]").on('click', function(e){
     e.preventDefault();
     var term = $("input[name=term]").val();
-    console.log(term);
     document.cookie = `search=${term}`;
     window.location.replace("/")
   })
@@ -29,8 +28,8 @@ $(document).ready(function(){
         url: "/api/podlists",
         data: data,
         success: renderPods,
-        error: function(){
-          console.log("Error");
+        error: function(err){
+          console.log(err);
         }
       })
     }else{
@@ -46,11 +45,8 @@ $(document).ready(function(){
     $.ajax({
       method: "DELETE",
       url: `/api/podlists/${id}`,
-      success: function(){
-        console.log("successful delete")
-      },
-      error: function(){
-        console.log("error")
+      error: function(err){
+        console.log(err)
       }
     })
   })
@@ -78,8 +74,8 @@ $(document).ready(function(){
     method: "GET",
     url: "/api/podlists",
     success: loadPods,
-    error: function(){
-      console.log("error")
+    error: function(err){
+      console.log(err)
     }
   })
 
@@ -90,7 +86,7 @@ $(document).ready(function(){
       method: "GET",
       url:`/api/podcasts/${id}`,
       success: renderModalData,
-      error: function(){console.log("error")}
+      error: function(err){console.log(err)}
     });
   });
 
@@ -119,8 +115,8 @@ function loadPods(podlists){
           parentdiv.append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
         }
       },
-      error: function(json){
-        console.log("error");
+      error: function(err){
+        console.log(err);
       }
     })
   })
