@@ -63,7 +63,7 @@ $(document).ready(function(){
 
 	function itunesReqErr(){
    	//Handle error
-   	$("#podcast-list").html(`<p>Sorry, your search did not return any result.</p>`);
+   	$("#podcast-list").html(`<p class="sorry">Sorry, your search did not return any results.</p>`);
 
 	}
 
