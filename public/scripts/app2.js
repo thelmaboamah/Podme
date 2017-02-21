@@ -110,19 +110,23 @@ $(document).ready(function(){
       e.preventDefault();
       var data = $(this).serialize();
 
-      $.ajax({
-        method: "PUT",
-        url: `/api/podlists/${id}`,
-        data: data,
-        success: updateListSuccess,
-        error: function(err){console.log(err);}
-      });
-      function updateListSuccess(podlist){
-        var podDiv = $(`div[id="${podlist._id}"]`);
-          podDiv.children("h2").html(`<i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}<span role="button" class="edit-list-info">Edit</span>`);
+      if ($("#listname").val()===""){
+        $("#listname").attr("placeholder", "Enter a Name");
+      } else {
+        $.ajax({
+          method: "PUT",
+          url: `/api/podlists/${id}`,
+          data: data,
+          success: updateListSuccess,
+          error: function(err){console.log(err);}
+        });
+        function updateListSuccess(podlist){
+          var podDiv = $(`div[id="${podlist._id}"]`);
+            podDiv.children("h2").html(`<i class="fa fa-plus" role="button" aria-hidden="true"></i>${podlist.name}<span role="button" class="edit-list-info">Edit</span>`);
+        }
+        $(this).trigger("reset");
+        $(this).parent().fadeOut(); 
       }
-      $(this).trigger("reset");
-      $(this).parent().fadeOut();
     });
     $(".edit-form .fa-times").click(function(){
       $(".edit-form").fadeOut();
