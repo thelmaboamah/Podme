@@ -157,7 +157,7 @@ function loadPods(podlists){
       success: function(json){     
         //if podcast array is length 0, render the add podcast/remove list options
         if (json.podcasts.length == 0){
-          parentdiv.append(`<h3><a href="/">Add Podcasts</a> <span>Remove Podlist</span></h3>`)
+          parentdiv.append(`<h3><a href="/">Add Podcasts</a> <span class="remove">Remove Podlist</span></h3>`)
         }
       },
       error: function(err){
